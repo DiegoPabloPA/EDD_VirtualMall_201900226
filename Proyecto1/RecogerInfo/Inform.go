@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	
 )
 
 var Informacion vector.InfoVector
@@ -39,4 +40,11 @@ func AsignarInformacion(w http.ResponseWriter, req *http.Request){
 	if err := json.Unmarshal(respuesta, &Informacion); err != nil {
 		panic(err)
 
-	}}
+	}
+
+	F:=len(Informacion.Indice1)
+	C:=len(Informacion.Indice1[0].Indice2)
+	total:=F*C*5
+	Arreglo
+
+}
