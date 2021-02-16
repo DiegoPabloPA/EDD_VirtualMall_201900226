@@ -1,18 +1,22 @@
 package Inform
 
 import (
+	ArregloEstatico "Proyecto1/Arreglo"
+	"Proyecto1/Graficar"
 	vector "Proyecto1/ListaDVec"
+	"Proyecto1/ListaDoble"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
 	"net/http"
-	
 )
 
 var Informacion vector.InfoVector
-
+var Arreglo []ListaDoble.ListaDE
+var fila[]string
+var columna[]string
 func Path(){
 	router:=mux.NewRouter()
 	router.HandleFunc("/",PaginaInicio)
@@ -42,9 +46,10 @@ func AsignarInformacion(w http.ResponseWriter, req *http.Request){
 
 	}
 
-	F:=len(Informacion.Indice1)
-	C:=len(Informacion.Indice1[0].Indice2)
-	total:=F*C*5
-	Arreglo
 
+	fila,columna=ArregloEstatico.CrearArreglo(Informacion)
+	tamanio:=len(fila)*len(columna)*5
+	Arreglo=make([]ListaDoble.ListaDE,tamanio)
+	ArregloEstatico.ColumnMajor(Arreglo,fila,columna,Informacion)
+	Graficar.GenerarArregloGrafico(Arreglo)
 }

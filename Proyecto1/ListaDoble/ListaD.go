@@ -3,20 +3,23 @@ package ListaDoble
 import "fmt"
 
 type Nodo struct {
-	anterior, siguiente *Nodo
-	 datos *Tienda
+	Anterior, Siguiente *Nodo
+	 Datos *Tienda
 
 }
 
 type Tienda struct{
-	Nombre,Descripcion,Contacto string
+	Fila string
+	Columna string
 	Calificacion int
+	Nombre,Descripcion,Contacto string
+
 }
 
 type ListaDE struct{
-	inicio *Nodo
-	final *Nodo
-	tamanio int
+	Inicio *Nodo
+	Final *Nodo
+	Tamanio int
 }
 func NuevaLDE()*ListaDE{
 	return &ListaDE{nil,nil,0}
@@ -25,18 +28,21 @@ func NuevaLDE()*ListaDE{
 
 func InsertarNuevaTienda(infor *Tienda, almacen *ListaDE){
 	var nuevo = &Nodo{nil,nil,infor}
-	if almacen.inicio==nil{
-		almacen.inicio=nuevo
-		almacen.final=nuevo
-		almacen.tamanio++
+	if almacen.Inicio==nil{
+		almacen.Inicio=nuevo
+		almacen.Final=nuevo
+		almacen.Tamanio++
 		}else{
-			almacen.final.siguiente=nuevo
-			almacen.final=nuevo
-			almacen.tamanio++
+			nuevo.Anterior=almacen.Final
+			almacen.Final.Siguiente=nuevo
+
+			almacen.Final=nuevo
+
+			almacen.Tamanio++
 	}
 }
 func Imprimir(lista*ListaDE){
-	fmt.Println(lista.inicio.datos.Nombre)
+	fmt.Println(lista.Inicio.Datos.Nombre)
 }
 
 
