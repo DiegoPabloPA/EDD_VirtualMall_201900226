@@ -50,5 +50,5 @@ if generacion!=nil{
 	consola, _ := exec.Command(graph, "-Tpng",direccion+"/diagrama.dot").Output()
 	ioutil.WriteFile("Grafico_Arreglo.png", consola, 0777)
 
-	
+
 }
