@@ -8,6 +8,7 @@ import (
 	"Proyecto1/GuardarJson"
 	vector "Proyecto1/ListaDVec"
 	"Proyecto1/ListaDoble"
+	"Proyecto1/OrdenAlfabetico"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -25,13 +26,31 @@ func Path(){
 	router:=mux.NewRouter()
 	router.HandleFunc("/",PaginaInicio)
 	router.HandleFunc("/cargartienda",AsignarInformacion).Methods("POST")
-	router.HandleFunc("/getArreglo",GenerarGrafico)
+	router.HandleFunc("/getArreglo",GenerarGrafico).Methods("GET")
 	router.HandleFunc("/TiendaEspecifica",Busqueda3).Methods("POST")
 	router.HandleFunc("/id/{ide}",BusquedaPosicion).Methods("GET")
 	router.HandleFunc("/guardar",GuardarInformacion)
+	router.HandleFunc("/Eliminar",Eliminar).Methods("DELETE")
 	log.Fatal(http.ListenAndServe(":3000", router))
 }
+func Eliminar(w http.ResponseWriter, req *http.Request){
+	if len(Arreglo)==0{
+		fmt.Fprintln(w,"Error aun no se han cargado datos")
+	}else{
+		respuesta, _ := ioutil.ReadAll(req.Body)
+		var busqueda ListaDoble.EstructuraEliminacion
+		if err := json.Unmarshal(respuesta, &busqueda); err != nil {
+			panic(err)
 
+		}
+		condicion:=ListaDoble.EliminarTienda(busqueda,Arreglo)
+		if condicion{
+			fmt.Fprintln(w,"Eliminacion exitosa!")
+		}else{
+			fmt.Fprintln(w,"No se encontraron tiendas con esas caracteristicas")
+		}
+	}
+}
 
 
 func Busqueda3(w http.ResponseWriter, req *http.Request){
@@ -55,8 +74,10 @@ func BusquedaPosicion(w http.ResponseWriter, req *http.Request){
 	if len(Arreglo)!=0{
 Dato:=mux.Vars(req)
 No:=Dato["ide"]
-fmt.Printf(No)
+
 a,_:=strconv.Atoi(No)
+a=a-1
+if a<len(Arreglo){
 Encontradas:=BusquedaNumero.Buscar(a,Arreglo)
 if len(Encontradas)==0{
 	fmt.Fprintln(w,"No se encontraron tiendas en dicho indice")
@@ -66,6 +87,8 @@ if len(Encontradas)==0{
 	w.WriteHeader(http.StatusOK)
 	w.Write(AJson)
 
+}}else{
+	fmt.Fprintln(w,"No se encontraron tiendas en dicho indice")
 }
 }else{
 		fmt.Fprintln(w,"Error aun no se han cargado datos")
@@ -95,6 +118,7 @@ func AsignarInformacion(w http.ResponseWriter, req *http.Request){
 	tamanio:=len(fila)*len(columna)*5
 	Arreglo=make([]ListaDoble.ListaDE,tamanio)
 	ArregloEstatico.ColumnMajor(Arreglo,fila,columna,Informacion)
+	OrdenAlfabetico.Ordenar(Arreglo)
 	if len(Arreglo)==0{
 		fmt.Fprintln(w,"ERROR CON EL ARCHIVO DE ENTRADA")
 	}else{

@@ -12,6 +12,10 @@ type EstructuraBusqueda struct {
 	Calificacion int `json:"Calificacion"`
 
 }
+
+
+
+
 type EstructuraRespuesta struct {
 	Nombre,Descripcion,Contacto string
 	Calificacion int
