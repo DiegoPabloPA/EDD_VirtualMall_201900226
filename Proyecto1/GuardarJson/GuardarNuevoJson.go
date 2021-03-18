@@ -11,6 +11,7 @@ type Tiendas2 struct {
 	Descripcion string
 	Contacto string
 	Calificacion int
+	Logo string
 }
 type Depa struct {
 	Nombre string
@@ -44,6 +45,8 @@ func Guardar(array []ListaDoble.ListaDE,fila []string, columna []string)(estruct
 							Descripcion:  aux.Datos.Descripcion,
 							Contacto:     aux.Datos.Contacto,
 							Calificacion: aux.Datos.Calificacion,
+							Logo: aux.Datos.Logo,
+
 						})
 						}
 						aux=aux.Siguiente

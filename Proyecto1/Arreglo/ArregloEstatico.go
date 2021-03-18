@@ -63,6 +63,7 @@ func ColumnMajor(array []ListaDoble.ListaDE,Filas []string,Columnas[]string,Dato
 						Nombre:       Datos.Indice1[a].Indice2[b].Tienda[d].Nombre,
 						Descripcion:  Datos.Indice1[a].Indice2[b].Tienda[d].Descripcion,
 						Contacto:     Datos.Indice1[a].Indice2[b].Tienda[d].Contacto,
+						Logo: Datos.Indice1[a].Indice2[b].Tienda[d].Logo,
 					}
 					tam:=Ingreso.Calificacion-1
 					ListaDoble.InsertarNuevaTienda(&Ingreso,&array[a+tamanioFila*(b+tamanioColumna*tam)])

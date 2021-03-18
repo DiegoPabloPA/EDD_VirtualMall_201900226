@@ -1,0 +1,18 @@
+.navbar-brand{
+    margin-left: 1%;
+}
+.contenedor{
+    display: inline-block;
+    width: 100%;
+   background:rgb(27, 25, 34);
+height: 80px;
+    color: rgb(179, 178, 174);
+    
+}
+.contenedormensaje{
+    margin-top: 0.2%;
+    margin-left: 15%;
+}
+body{
+display: block;
+}

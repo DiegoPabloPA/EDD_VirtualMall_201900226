@@ -1,0 +1,1 @@
+export const serverGo='http://localhost:3000/';

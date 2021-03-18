@@ -1,0 +1,23 @@
+.inicios{
+   position: relative;
+  background-image: url("../imagenes/fondoinicio.jpg") ;
+  background-color: rgba(255, 0, 0, 0.5);
+  background-size: cover;
+  
+  height: 700px;
+  margin-top: 0%;
+}
+
+.caja1{
+    width: 90%;
+    height: 50%;
+   color: rgb(255, 255, 255);;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 25%;
+}
+.caja2{
+    background-color:  rgba(255, 169, 40, 0.6);
+    width: 100%;
+    text-align: center;
+}

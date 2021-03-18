@@ -1,0 +1,33 @@
+.Tienda{
+    
+    display:inline-block;
+    position: relative;
+    margin-left: 40%;
+   margin-bottom: 3%;
+    margin-top: 2%;
+    width: 30%;
+    
+    border: solid;
+    border-radius: 15px 50px;
+}
+.Tienda img{
+    width: 100px;
+    height: 100px;
+    margin:auto;
+    display: block;
+}
+.Tienda h3{
+    text-align: left;
+    margin-left: 4%;
+}
+
+
+.Tienda p{
+    font-size: 20px;
+    text-align: center;
+}
+.Tienda button{
+    margin: auto;
+    display: block;
+    margin-bottom: 2%;
+}

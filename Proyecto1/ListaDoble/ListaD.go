@@ -1,6 +1,7 @@
 package ListaDoble
 
 import (
+	 "Proyecto1/EstructuraAVL"
 	"fmt"
 	"strings"
 )
@@ -15,7 +16,8 @@ type Tienda struct{
 	Fila string
 	Columna string
 	Calificacion int
-	Nombre,Descripcion,Contacto string
+	Nombre,Descripcion,Contacto,Logo string
+	Inventario EstructuraAVL.AVL
 
 }
 

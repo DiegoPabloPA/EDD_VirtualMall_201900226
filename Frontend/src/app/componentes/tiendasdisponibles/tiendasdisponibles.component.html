@@ -1,0 +1,13 @@
+
+<div *ngFor="let item of respuesta">
+<div class="Tienda" >
+    <h3>Categoría:</h3><p>{{item.Columna}}</p>
+    <h3>Nombre:</h3><p>{{item.Nombre}}</p>
+    <img src={{item.Logo}}>
+    <h3>Descripción:</h3><p>{{item.Descripcion}}</p>
+        <button  (click)="impresion(item.Columna,item.Nombre,item.Calificacion)" type="button" class="btn btn-secondary">Ingresar a la Tienda</button>
+
+    
+
+</div>
+</div>

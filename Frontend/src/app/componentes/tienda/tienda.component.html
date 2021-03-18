@@ -1,0 +1,35 @@
+
+<div class="general">
+    <div class="cargaInv">
+        <div class="tituloCargaTiendas">
+            <p>Carga de Inventario</p>
+        </div>
+        <form >
+            <textarea [formControl]="textoarea"  cols="40" rows="15" style="resize: none"></textarea>
+            <button (click)="enviarInventario()" type="button"  class="btn btn-success">Cargar</button>
+        </form>
+
+    </div>
+<div class="infoTienda">
+    <div  *ngFor="let item of informacion">
+        <img *ngIf="item==Logo" src={{respuesta[item]}}>
+       <h4 *ngIf="item!=Logo">{{item}}:</h4> <p *ngIf="item!=Logo">{{respuesta[item]}}</p>
+    </div>
+
+</div>
+
+
+</div>
+
+<div class="productos">
+    <h1>Productos disponibles:</h1>
+<div *ngFor="let item of inventarios" class="inforprod">
+<img src={{item.Imagen}}>
+<h5>Nombre:</h5><p>{{item.Nombre}}</p>
+<h5>Descripcion:</h5><p>{{item.Descripcion}}</p>
+<h5>Precio:</h5><p>Q{{item.Precio}}</p>
+<h5>Cantidad:</h5><input type="number" min="1">
+<button type="button" class="btn btn-success">Añadir al carrito de Compras</button>
+
+</div>
+</div>
