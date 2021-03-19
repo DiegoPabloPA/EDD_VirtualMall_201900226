@@ -1,11 +1,15 @@
 package MatrizDispersa
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type DescripcionPedido struct {
 	Codigo int
 	Cantidad int
 }
+
 type Pedido struct{
 	Siguiente *Pedido
 	Dia int
@@ -28,6 +32,17 @@ type Nodo struct {
 type MatrizDispersa struct {
 	Nodoinicio *Nodo
 }
+func (m *MatrizDispersa) init() {
+	m.Nodoinicio = &Nodo{
+		Arriba:      nil,
+		Abajo:       nil,
+		Izquierda:   nil,
+		Derecha:     nil,
+		informacion: nil,
+	}
+}
+
+
 func (m *MatrizDispersa) CrearColumna(dia int){
 	aux:=m.Nodoinicio
 	if aux.Derecha==nil{
@@ -52,16 +67,17 @@ func (m *MatrizDispersa) CrearColumna(dia int){
 		aux.Derecha=nuevo
 	}else{
 		bandera:=true
-		aux2:=m.Nodoinicio
+		aux2:=m.Nodoinicio.Derecha
 		for aux2!=nil{
 			if aux2.informacion.Dia==dia{
 				bandera=false
+				aux2=aux2.Derecha
 			}else{
 				aux2=aux2.Derecha
 			}
 		}
 		if bandera{
-			for aux.Derecha!=nil&&aux.informacion.Dia<dia{
+			for aux.Derecha!=nil&&aux.Derecha.informacion.Dia<dia{
 				aux=aux.Derecha
 			}
 			if aux.Derecha==nil{
@@ -104,8 +120,8 @@ func (m *MatrizDispersa) CrearColumna(dia int){
 						Descripcion:  nil,
 					},
 				}
-			aux.Derecha=nuevo
-			aux3.Izquierda=nuevo
+				aux.Derecha=nuevo
+				aux3.Izquierda=nuevo
 			}
 		}
 	}
@@ -135,10 +151,12 @@ func (m *MatrizDispersa)GenerarFila(categoria string){
 		aux.Abajo=nuevo
 	}else{
 		bandera:=true
-		aux2:=m.Nodoinicio
+		aux2:=m.Nodoinicio.Abajo
 		for aux2!=nil{
+
 			if strings.EqualFold(aux2.informacion.Departamento,categoria){
 				bandera=false
+				aux2=aux2.Abajo
 			}else{
 				aux2=aux2.Abajo
 			}
@@ -174,7 +192,7 @@ func (m *MatrizDispersa)GenerarFila(categoria string){
 
 func (m*MatrizDispersa)InsertarNodo(FilaCategoria string, ColumnaDia int,Informacion Pedido){
 	auxFila:=m.Nodoinicio
-
+	banderaUniversal:=true
 	nuevo:=&Nodo{
 		Arriba:      nil,
 		Abajo:       nil,
@@ -193,95 +211,44 @@ func (m*MatrizDispersa)InsertarNodo(FilaCategoria string, ColumnaDia int,Informa
 			Descripcion:  Informacion.Descripcion,
 		},
 	}
+
 	//Insertar el nodo en la Fila
+	bandera1Fila:=true
 	for auxFila.Abajo!=nil{
 		auxFila=auxFila.Abajo
-		if strings.EqualFold(auxFila.informacion.Departamento,FilaCategoria){
+		if strings.EqualFold(FilaCategoria,auxFila.informacion.Departamento){
 			if auxFila.Derecha==nil{
+
 				auxFila.Derecha=nuevo
 				nuevo.Izquierda=auxFila
-			}else{
-				bandera:=true
-				for auxFila.Derecha!=nil{
-					auxFila=auxFila.Derecha
-					aux3:=auxFila
-					for aux3.Arriba!=nil{
-						aux3=aux3.Arriba
+			}else if auxFila.Derecha!=nil{
+				for auxFila.Derecha!=nil {
+					auxFila = auxFila.Derecha
+					aux1:=auxFila
+					for aux1.Arriba!=nil{
+						aux1=aux1.Arriba
 					}
-					 if ColumnaDia<aux3.informacion.Dia{
-							bandera=false
-							aux4:=auxFila.Izquierda
-							aux4.Derecha=nuevo
-							nuevo.Izquierda=aux4
-							nuevo.Derecha=auxFila
-							auxFila.Izquierda=nuevo
 
-					 }else if ColumnaDia==aux3.informacion.Dia{
-					 		bandera=false
-					 		aux5:=auxFila.informacion
-							for aux5.Siguiente!=nil{
-								aux5=aux5.Siguiente
-							}
-							aux5.Siguiente=&Pedido{
-								Siguiente:    nil,
-								Dia:          Informacion.Dia,
-								Mes:          Informacion.Mes,
-								Anio:         Informacion.Anio,
-								Cliente:      Informacion.Cliente,
-								Direccion:    Informacion.Direccion,
-								NombreTienda: Informacion.NombreTienda,
-								Departamento: Informacion.Departamento,
-								Calificacion: Informacion.Calificacion,
-								Descripcion:  Informacion.Descripcion,
-							}
-					 }
-				}
-				if bandera{
-					auxFila.Derecha=nuevo
-					nuevo.Izquierda=auxFila
-				}
-			}
-
-		}
-	}
-	//-----------------------------------------------------------------------------------------------
-	auxColumna:=m.Nodoinicio
-	for auxColumna.Derecha!=nil{
-		auxColumna=auxColumna.Derecha
-		if auxColumna.informacion.Dia==ColumnaDia{
-			if auxColumna.Abajo==nil{
-				auxColumna.Abajo=nuevo
-				nuevo.Arriba=auxColumna
-			}else{
-				bandera:=true
-				for auxColumna.Abajo!=nil{
-					auxColumna=auxColumna.Abajo
-					aux3:=auxColumna
-					for aux3.Izquierda!=nil{
-						aux3=aux3.Izquierda
-					}
-					aux7:=aux3
-					bandera2:=true
-					for aux7.Arriba!=nil{
-					if strings.EqualFold(aux7.Arriba.informacion.Departamento,FilaCategoria){
-						bandera2=false
-						bandera=false
-						aux4:=auxColumna.Arriba
-						aux4.Abajo=nuevo
-						nuevo.Arriba=aux4
-						nuevo.Abajo=auxFila
-						auxFila.Arriba=nuevo
-
-					}
-					aux7=aux7.Arriba
-					}
-					if strings.EqualFold(FilaCategoria,aux3.informacion.Departamento)&&bandera2{
-						bandera=false
-						aux5:=auxColumna.informacion
-						for aux5.Siguiente!=nil{
-							aux5=aux5.Siguiente
+					if ColumnaDia<aux1.informacion.Dia{
+						bandera1Fila=false
+						aux2:=auxFila.Izquierda
+						nuevo.Derecha=auxFila
+						nuevo.Izquierda=aux2
+						auxFila.Izquierda=nuevo
+						aux2.Derecha=nuevo
+					}else if ColumnaDia>aux1.informacion.Dia&&auxFila.Derecha==nil&&bandera1Fila{
+						bandera1Fila=false
+						nuevo.Izquierda=auxFila
+						auxFila.Derecha=nuevo
+					}else if ColumnaDia==aux1.informacion.Dia&&bandera1Fila{
+						banderaUniversal=false
+						aux2:=auxFila.informacion
+						for aux2.Siguiente!=nil{
+							aux2=aux2.Siguiente
 						}
-						aux5.Siguiente=&Pedido{
+
+
+						aux2.Siguiente=&Pedido{
 							Siguiente:    nil,
 							Dia:          Informacion.Dia,
 							Mes:          Informacion.Mes,
@@ -295,12 +262,98 @@ func (m*MatrizDispersa)InsertarNodo(FilaCategoria string, ColumnaDia int,Informa
 						}
 					}
 				}
-				if bandera{
-					auxColumna.Abajo=nuevo
-					nuevo.Arriba=auxColumna
-				}
+
 			}
 		}
+	}
+
+	//<---------------------------------------------------------------------------------------------------------------->
+
+
+
+
+	auxColumna:=m.Nodoinicio
+	banderaColumna:=true
+	for auxColumna.Derecha!=nil{
+		auxColumna=auxColumna.Derecha
+		if auxColumna.informacion.Dia==ColumnaDia{
+			if auxColumna.Abajo==nil{
+				auxColumna.Abajo=nuevo
+				nuevo.Arriba=auxColumna
+			}else if auxColumna.Abajo!=nil{
+				for auxColumna.Abajo!=nil {
+					auxColumna = auxColumna.Abajo
+					//ahora voy a encontrar la categoria
+					comparadorFila:=auxColumna
+					for comparadorFila.Izquierda!=nil{
+						comparadorFila=comparadorFila.Izquierda
+					}
+					for comparadorFila.Arriba!=nil{
+						if strings.EqualFold(comparadorFila.informacion.Departamento,FilaCategoria)&&banderaUniversal{
+							banderaColumna=false
+							aux3:=auxColumna.Arriba
+							nuevo.Arriba=aux3
+							nuevo.Abajo=auxColumna
+							auxColumna.Arriba=nuevo
+							aux3.Abajo=nuevo
+						}
+						comparadorFila=comparadorFila.Arriba
+					}
+
+
+				}
+
+
+
+			}
+			if banderaColumna&&banderaUniversal{
+				auxColumna.Abajo=nuevo
+				nuevo.Arriba=auxColumna
+			}
+		}
+	}
+
+}
+
+func (m MatrizDispersa)InsertarPedido(datos Pedido){
+	m.CrearColumna(datos.Dia)
+	m.GenerarFila(datos.Departamento)
+	m.InsertarNodo(datos.Departamento,datos.Dia,datos)
+}
+func (m MatrizDispersa)Imprimir(){
+	auxColumna:=m.Nodoinicio
+	auxFila:=m.Nodoinicio
+
+	for auxColumna.Derecha!=nil{
+		auxColumna=auxColumna.Derecha
+		fmt.Print("       	   ",auxColumna.informacion.Dia," ")
+	}
+	fmt.Println(" ")
+	for auxFila.Abajo!=nil{
+
+		fmt.Print(auxFila.Abajo.informacion.Departamento," ")
+		auxFila=auxFila.Abajo
+		aux2:=auxFila
+		for aux2.Derecha!=nil{
+
+			aux2=aux2.Derecha
+
+			aux3:=aux2
+
+
+			for aux3.Arriba!=nil{
+
+				aux3=aux3.Arriba
+			}
+			fmt.Print("(",auxFila.informacion.Departamento,",",aux3.informacion.Dia,")",aux2.informacion.Cliente)
+			desaux:=aux2.informacion
+			for desaux.Siguiente!=nil{
+				desaux=desaux.Siguiente
+
+				fmt.Print(" (",auxFila.informacion.Departamento,",",desaux.Dia,")",desaux.Cliente)
+			}
+		}
+		fmt.Println(" ")
 	}
 }
 
