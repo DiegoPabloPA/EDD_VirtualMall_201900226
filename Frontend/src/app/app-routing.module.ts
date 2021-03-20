@@ -5,6 +5,7 @@ import {  CargartiendasComponent} from "./componentes/cargartiendas/cargartienda
 import {  CargainventariosComponent} from "./componentes/cargainventarios/cargainventarios.component";
 import { TiendasdisponiblesComponent } from "./componentes/tiendasdisponibles/tiendasdisponibles.component";
 import { TiendaComponent } from "./componentes/tienda/tienda.component";
+import { ConfirmarcarritoComponent } from './componentes/confirmarcarrito/confirmarcarrito.component';
 const routes: Routes = [
   {path:'',
   component:StartComponent,
@@ -23,6 +24,10 @@ const routes: Routes = [
 {
   path:"tienda",
   component:TiendaComponent
+},
+{
+  path:"confirmarPedido",
+  component:ConfirmarcarritoComponent
 }
 
 

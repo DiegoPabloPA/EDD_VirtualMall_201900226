@@ -32,7 +32,7 @@ type Nodo struct {
 type MatrizDispersa struct {
 	Nodoinicio *Nodo
 }
-func (m *MatrizDispersa) init() {
+func (m *MatrizDispersa) Init() {
 	m.Nodoinicio = &Nodo{
 		Arriba:      nil,
 		Abajo:       nil,

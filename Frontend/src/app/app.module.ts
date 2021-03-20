@@ -9,6 +9,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { CargainventariosComponent } from './componentes/cargainventarios/cargainventarios.component';
 import { TiendasdisponiblesComponent } from './componentes/tiendasdisponibles/tiendasdisponibles.component';
 import { TiendaComponent } from './componentes/tienda/tienda.component';
+import { ConfirmarcarritoComponent } from './componentes/confirmarcarrito/confirmarcarrito.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { TiendaComponent } from './componentes/tienda/tienda.component';
     CargartiendasComponent,
     CargainventariosComponent,
     TiendasdisponiblesComponent,
-    TiendaComponent
+    TiendaComponent,
+    ConfirmarcarritoComponent
   ],
   imports: [
     BrowserModule,

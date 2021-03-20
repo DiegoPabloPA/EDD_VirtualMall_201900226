@@ -102,6 +102,8 @@ func EnviarDatos(nodo *EstructuraAVL.NodoArbol,resultado[]InventarioJson)(resul[
 	}
 	return resultado
 }
+
+
 type InventarioJson struct{
 	Nombre      string
 	Codigo      int

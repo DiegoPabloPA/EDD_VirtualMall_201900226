@@ -2,6 +2,8 @@ package Inform
 
 import (
 	ArregloEstatico "Proyecto1/Arreglo"
+	"Proyecto1/Carrito"
+	"Proyecto1/EnviarCarrito"
 	"Proyecto1/EstructuraAVL"
 	BusquedaNumero "Proyecto1/FuncionBusquedaNumero"
 	Busqueda3Parametros "Proyecto1/Funciones"
@@ -20,11 +22,14 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 var Informacion vector.InfoVector
 var Inventarios Inventarios2.CargadeInventario
 var InventarioInd EstructuraAVL.InventarioIndividual
+var CarritoConfirm Carrito.JsonPedidoIndv
+var CarroActual []Carrito.JsonPedidoIndv
 var Arreglo []ListaDoble.ListaDE
 var fila[]string
 var columna[]string
@@ -35,6 +40,7 @@ func Path(){
 	router.HandleFunc("/cargartienda",AsignarInformacion).Methods("POST")
 	router.HandleFunc("/getArreglo",GenerarGrafico).Methods("GET")
 	router.HandleFunc("/TiendaEspecifica",Busqueda3).Methods("POST")
+	router.HandleFunc("/AgregarCarrito",RecibirCarrito).Methods("POST")
 	router.HandleFunc("/EnvioInventario",EnviarJsonInventario).Methods("POST")
 	router.HandleFunc("/id/{ide}",BusquedaPosicion).Methods("GET")
 	router.HandleFunc("/guardar",GuardarInformacion)
@@ -43,10 +49,40 @@ func Path(){
 	router.HandleFunc("/JsonFrontEnd",JsonFront).Methods("GET")
 	router.HandleFunc("/ubicaTienda",UbicarTienda).Methods("POST")
 	router.HandleFunc("/subirInventarioIndividual",CargaIndividualInventario).Methods("POST")
+	router.HandleFunc("/InfoCompra",Compra).Methods("GET")
+	router.HandleFunc("/EliminarCarrito",EliminarCarrito).Methods("POST")
 	log.Fatal(http.ListenAndServe(":3000", handlers.CORS(handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}), handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}), handlers.AllowedOrigins([]string{"*"}))(router)))
 
 
 }
+func Compra(w http.ResponseWriter, req *http.Request){
+	if len(Arreglo)==0{
+		fmt.Fprintln(w,"ERROR, Aun no se han cargado datos")
+	}else{
+		estructura:=EnviarCarrito.ConvertirCarritoDesc(CarroActual,Arreglo)
+		AJson,_:=json.Marshal(estructura)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(AJson)
+	}
+}
+func EliminarCarrito(w http.ResponseWriter, req *http.Request){
+	if len(Arreglo)==0{
+		fmt.Fprintln(w,"Error aun no se han cargado datos")
+	}else{
+		respuesta, _ := ioutil.ReadAll(req.Body)
+		var busqueda EnviarCarrito.EliminacionProd
+		if err := json.Unmarshal(respuesta, &busqueda); err != nil {
+			panic(err)
+
+		}
+		CarroActual=EnviarCarrito.EliminardelCarrito(busqueda,CarroActual)
+
+	}
+}
+
+
+
 func UbicarTienda(w http.ResponseWriter, req *http.Request){
 	respuesta, _ := ioutil.ReadAll(req.Body)
 
@@ -150,7 +186,86 @@ func PaginaInicio(w http.ResponseWriter, req *http.Request){
 	fmt.Fprintf(w,"TODOS LOS DERECHOS RESERVADOS")
 }
 
+func RecibirCarrito(w http.ResponseWriter, req *http.Request){
+	if len(Arreglo)==0{
+		fmt.Fprintln(w,"ERROR, Aun no se han cargado datos")
+	}else{
+		respuesta,_:=ioutil.ReadAll(req.Body)
 
+		if err := json.Unmarshal(respuesta, &CarritoConfirm); err != nil {
+			panic(err)
+
+		}
+
+
+		if len(CarroActual)==0{
+		condicion:=Carrito.ValidarPedido(CarritoConfirm,Arreglo)
+			if condicion{
+				mensaje:=Carrito.Respuesta{Res: "Si"}
+				AJson,_:=json.Marshal(mensaje)
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusOK)
+				w.Write(AJson)
+				CarroActual=append(CarroActual,CarritoConfirm)
+
+			}else{
+				mensaje:=Carrito.Respuesta{Res: "No"}
+				AJson,_:=json.Marshal(mensaje)
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusOK)
+				w.Write(AJson)
+			}
+
+		}else{
+			condicion2:=true
+			for a:=0;a<len(CarroActual);a++{
+				if strings.EqualFold(CarritoConfirm.Nombre,CarroActual[a].Nombre)&&strings.EqualFold(CarritoConfirm.Departamento,CarroActual[a].Departamento)&&CarritoConfirm.Calificacion==CarroActual[a].Calificacion&&CarritoConfirm.Codigo==CarroActual[a].Codigo{
+					CarritoConfirm.Cantidad+=CarroActual[a].Cantidad
+					condicion2=false
+				}
+			}
+			condicion:=Carrito.ValidarPedido(CarritoConfirm,Arreglo)
+			for a:=0;a<len(CarroActual);a++{
+				if strings.EqualFold(CarritoConfirm.Nombre,CarroActual[a].Nombre)&&strings.EqualFold(CarritoConfirm.Departamento,CarroActual[a].Departamento)&&CarritoConfirm.Calificacion==CarroActual[a].Calificacion&&CarritoConfirm.Codigo==CarroActual[a].Codigo{
+					CarritoConfirm.Cantidad-=CarroActual[a].Cantidad
+
+				}
+			}
+
+
+			if condicion{
+				mensaje:=Carrito.Respuesta{Res: "Si"}
+				AJson,_:=json.Marshal(mensaje)
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusOK)
+				w.Write(AJson)
+				if condicion2{
+				CarroActual=append(CarroActual,CarritoConfirm)
+				}else{
+					for a:=0;a<len(CarroActual);a++{
+						if strings.EqualFold(CarritoConfirm.Nombre,CarroActual[a].Nombre)&&strings.EqualFold(CarritoConfirm.Departamento,CarroActual[a].Departamento)&&CarritoConfirm.Calificacion==CarroActual[a].Calificacion&&CarritoConfirm.Codigo==CarroActual[a].Codigo{
+							CarroActual[a].Cantidad+=CarritoConfirm.Cantidad
+
+						}
+					}
+				}
+
+			}else{
+				mensaje:=Carrito.Respuesta{Res: "No"}
+				AJson,_:=json.Marshal(mensaje)
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusOK)
+				w.Write(AJson)
+			}
+
+
+
+		}
+
+
+
+	}
+}
 
 
 

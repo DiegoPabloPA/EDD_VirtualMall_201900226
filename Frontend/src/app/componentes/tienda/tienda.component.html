@@ -1,3 +1,25 @@
+<div *ngIf="mostrarMensaje" class="row justify-content-around">
+    <div class="col-md-5">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Articulo agregado a su carrito exitosamente!
+            <button type="button" (click)="desactivarMensajes()" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div *ngIf="mostrarMensajeError" class="row justify-content-around">
+    <div class="col-md-5">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Lo sentimos. Actualmente no contamos con la cantidad deseada de dicho articulo
+            <button type="button" (click)="desactivarMensajes()" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
 
 <div class="general">
     <div class="cargaInv">
@@ -23,13 +45,13 @@
 
 <div class="productos">
     <h1>Productos disponibles:</h1>
-<div *ngFor="let item of inventarios" class="inforprod">
+<div *ngFor="let item of inventarios;let i=index" class="inforprod">
 <img src={{item.Imagen}}>
 <h5>Nombre:</h5><p>{{item.Nombre}}</p>
 <h5>Descripcion:</h5><p>{{item.Descripcion}}</p>
 <h5>Precio:</h5><p>Q{{item.Precio}}</p>
-<h5>Cantidad:</h5><input type="number" min="1">
-<button type="button" class="btn btn-success">Añadir al carrito de Compras</button>
+<h5>Cantidad:</h5><input id={{pInputCant[i]}} type="number" value=1 min="1">
+<button (click)="imprimirInventarios(pInputCant[i])" type="button" class="btn btn-success">Añadir al carrito de Compras</button>
 
 </div>
 </div>

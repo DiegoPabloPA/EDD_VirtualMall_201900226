@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TiendaService } from "../../servicios/tienda.service";
-import { Busqueda } from "../../modelos/busqueda";
+import { Busqueda, EnvioCompra } from "../../modelos/busqueda";
 import { FormControl } from '@angular/forms';
+import { flushMicrotasks } from '@angular/core/testing';
 
 @Component({
   selector: 'app-tienda',
@@ -14,16 +15,26 @@ export class TiendaComponent implements OnInit {
    
   }
   textoarea=new FormControl('')
+
+  pInputCant:string[]=[];
   informacion:String[];
+  categorias:String[];
   informacion2:String[];
   inventarios:any;
   respuesta:any;
   Logo:String="Logo";
+  mostrarMensaje=false
+  mostrarMensajeError=false
+
+
+
   ngOnInit(): void {
     const bus:Busqueda={
       Departamento:localStorage.getItem('Categoria'),
       Nombre:localStorage.getItem('Nombre'),
       Calificacion:parseInt(localStorage.getItem('calificacion'))
+
+
     }
 
 
@@ -43,14 +54,25 @@ export class TiendaComponent implements OnInit {
         this.informacion2=Object.keys(res)
         
         this.inventarios=res
-        console.log(this.inventarios)
+        this.AsignarInfo()
         },(err)=>{
           
         }
         
         )
+
+      
+
+       
     
   }
+  AsignarInfo(){
+    this.inventarios.forEach(element => {
+      this.pInputCant.push(element.Codigo)
+    });
+    
+  }
+
  
   imprimir(){
     console.log(localStorage.getItem('Nombre'))
@@ -81,6 +103,39 @@ export class TiendaComponent implements OnInit {
       )
       
       window.location.href="/tienda"
+  
+  
+    }
+    cantidad:number
+
+    desactivarMensajes(){
+this.mostrarMensaje=false
+this.mostrarMensajeError=false
+    }
+  imprimirInventarios(valor){
+    var reco= (<HTMLInputElement>document.getElementById(valor)).value;
+    var compra:EnvioCompra={
+      Departamento:localStorage.getItem('Categoria'),
+      Nombre:localStorage.getItem('Nombre'),
+      Calificacion:parseInt(localStorage.getItem('calificacion')),
+      Codigo:parseInt(valor),
+      Cantidad:parseInt(reco)
+    }
+    this.tienda.postAgregarCarrito(compra).subscribe((res:any)=>{
+      if (res.Res==="Si"){
+        this.mostrarMensaje=true;
+        
+      }else if (res.Res==="No"){
+        this.mostrarMensajeError=true
+      }
+    },(err)=>{
+      
+    }
+    
+    )
+    
+    
+
   }
 
 }

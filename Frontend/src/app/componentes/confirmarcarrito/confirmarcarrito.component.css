@@ -1,0 +1,16 @@
+.carritogeneral{
+    margin: auto;
+    display: block;
+    height: 100%;
+}
+.carritogeneral h1{
+    text-align: center;
+    margin-top: 4%;
+}
+.tabla{
+    margin-top: 4%;
+    margin-bottom: 5%;
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: center;
+}

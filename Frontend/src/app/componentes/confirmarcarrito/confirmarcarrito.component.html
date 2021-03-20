@@ -1,0 +1,41 @@
+<div class="carritogeneral">
+    <h1>Carrito de compras</h1>
+<div class="tabla">
+    <table class="table table-dark">
+        <thead>
+          <tr>
+            
+            <th scope="col">Producto</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Costo</th>
+            <th scope="col">Eliminar producto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of informacion">
+            <td>{{item.Nombre}}</td>
+            <td>{{item.Cantidad}}</td>
+            <td>Q{{item.Total}}</td>
+            <td><button (click)="eliminar(item.Nombre,item.Tienda,item.Codigo)" type="button" class="btn btn-danger">Eliminar</button></td>
+          </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <th scope="row">TOTAL</th>
+                <td>Q{{totalfinal}}</td>
+            </tr>
+            <tr>
+              <td><button type="button" (click)="redireccionTiendas()" class="btn btn-warning">Continuar Comprando</button></td>
+              <td></td>
+              <td></td>
+              <td><button type="button" class="btn btn-success">Confirmar Pedido</button></td>
+            </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+    
+    
+
+</div>

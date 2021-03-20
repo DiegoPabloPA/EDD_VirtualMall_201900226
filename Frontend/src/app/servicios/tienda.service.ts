@@ -46,6 +46,16 @@ export class TiendaService {
     return this.http.post<any>(serverGo+'subirInventarioIndividual',archivo,httpOptions)
 
   }
+  postAgregarCarrito(archivo):Observable<any>{
+    const httpOptions={
+      headers:new HttpHeaders({
+        'Content-Type':'application/json'
+      }),
+    };
+    return this.http.post<any>(serverGo+'AgregarCarrito',archivo,httpOptions)
+
+  }
+
  
 
 
