@@ -40,12 +40,12 @@ func RotacionSimpleDerecha(evaluar *EstructuraAVL.NodoArbol)*EstructuraAVL.NodoA
 	return evaluar
 }
 func RotacionDobleIzquierda(evaluar *EstructuraAVL.NodoArbol)*EstructuraAVL.NodoArbol{
-	evaluar=RotacionSimpleDerecha(evaluar)
+	evaluar.Izquierda=RotacionSimpleDerecha(evaluar.Izquierda)
 	evaluar=RotacionSimpleIzquierda(evaluar)
 	return evaluar
 }
 func RotacionDobleDerecha(evaluar *EstructuraAVL.NodoArbol)*EstructuraAVL.NodoArbol{
-	evaluar=RotacionSimpleIzquierda(evaluar)
+	evaluar.Derecha=RotacionSimpleIzquierda(evaluar.Derecha)
 	evaluar=RotacionSimpleDerecha(evaluar)
 	return evaluar
 }
@@ -55,10 +55,11 @@ func  Insertar(nodo *EstructuraAVL.NodoArbol,datos EstructuraAVL.DatosNodoArbol)
 	nuevo:=&EstructuraAVL.NodoArbol{Izquierda: nil, Derecha:   nil, Altura:    0, Datos:     datos}
 	if nodo==nil{
 		return nuevo
-	}else if  nodo.Datos.Codigo>datos.Codigo{
+	}
+	if  nodo.Datos.Codigo>datos.Codigo{
 		nodo.Izquierda=Insertar(nodo.Izquierda,datos)
-		if Altura(nodo.Izquierda)-Altura(nodo.Derecha)==-2{
-			if datos.Codigo<nodo.Izquierda.Altura{
+		if Altura(nodo.Izquierda)-Altura(nodo.Derecha)==2{
+			if datos.Codigo<nodo.Izquierda.Datos.Codigo{
 				nodo=RotacionSimpleIzquierda(nodo)
 			}else{
 				nodo=RotacionDobleIzquierda(nodo)

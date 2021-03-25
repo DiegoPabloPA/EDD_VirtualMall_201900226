@@ -36,3 +36,29 @@ export class EliminarArticulo{
        
     }
 }
+export class DiaCategoria{
+    
+    Anio:number
+    Mes:string
+    
+    constructor(_an:number,_me:string){
+        this.Anio=_an
+        this.Mes=_me
+       
+    }
+}
+export class DiaInforme{
+    
+    Anio:number
+    Mes:string
+    Dia:number
+    Categoria:string
+    
+    constructor(_an:number,_me:string,_di:number,_ca:string){
+        this.Anio=_an
+        this.Mes=_me
+        this.Dia=_di
+        this.Categoria=_ca
+       
+    }
+}

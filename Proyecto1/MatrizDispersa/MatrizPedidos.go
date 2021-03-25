@@ -27,7 +27,7 @@ type Pedido struct{
 
 type Nodo struct {
 	Arriba,Abajo,Izquierda,Derecha *Nodo
-	informacion *Pedido
+	Informacion *Pedido
 }
 type MatrizDispersa struct {
 	Nodoinicio *Nodo
@@ -38,7 +38,7 @@ func (m *MatrizDispersa) Init() {
 		Abajo:       nil,
 		Izquierda:   nil,
 		Derecha:     nil,
-		informacion: nil,
+		Informacion: nil,
 	}
 }
 
@@ -51,7 +51,7 @@ func (m *MatrizDispersa) CrearColumna(dia int){
 			Abajo:       nil,
 			Izquierda:   aux,
 			Derecha:     nil,
-			informacion: &Pedido{
+			Informacion: &Pedido{
 				Siguiente: nil,
 				Dia:          dia,
 				Mes:          "",
@@ -69,7 +69,7 @@ func (m *MatrizDispersa) CrearColumna(dia int){
 		bandera:=true
 		aux2:=m.Nodoinicio.Derecha
 		for aux2!=nil{
-			if aux2.informacion.Dia==dia{
+			if aux2.Informacion.Dia==dia{
 				bandera=false
 				aux2=aux2.Derecha
 			}else{
@@ -77,7 +77,7 @@ func (m *MatrizDispersa) CrearColumna(dia int){
 			}
 		}
 		if bandera{
-			for aux.Derecha!=nil&&aux.Derecha.informacion.Dia<dia{
+			for aux.Derecha!=nil&&aux.Derecha.Informacion.Dia<dia{
 				aux=aux.Derecha
 			}
 			if aux.Derecha==nil{
@@ -86,7 +86,7 @@ func (m *MatrizDispersa) CrearColumna(dia int){
 					Abajo:       nil,
 					Izquierda:   aux,
 					Derecha:     nil,
-					informacion: &Pedido{
+					Informacion: &Pedido{
 						Siguiente: nil,
 						Dia:          dia,
 						Mes:          "",
@@ -107,7 +107,7 @@ func (m *MatrizDispersa) CrearColumna(dia int){
 					Abajo:       nil,
 					Izquierda:   aux,
 					Derecha:     aux3,
-					informacion: &Pedido{
+					Informacion: &Pedido{
 						Siguiente: nil,
 						Dia:          dia,
 						Mes:          "",
@@ -135,7 +135,7 @@ func (m *MatrizDispersa)GenerarFila(categoria string){
 			Abajo:       nil,
 			Izquierda:   nil,
 			Derecha:     nil,
-			informacion: &Pedido{
+			Informacion: &Pedido{
 				Siguiente: nil,
 				Dia:          0,
 				Mes:          "",
@@ -154,7 +154,7 @@ func (m *MatrizDispersa)GenerarFila(categoria string){
 		aux2:=m.Nodoinicio.Abajo
 		for aux2!=nil{
 
-			if strings.EqualFold(aux2.informacion.Departamento,categoria){
+			if strings.EqualFold(aux2.Informacion.Departamento,categoria){
 				bandera=false
 				aux2=aux2.Abajo
 			}else{
@@ -171,7 +171,7 @@ func (m *MatrizDispersa)GenerarFila(categoria string){
 					Abajo:       nil,
 					Izquierda:   nil,
 					Derecha:     nil,
-					informacion: &Pedido{
+					Informacion: &Pedido{
 						Siguiente: nil,
 						Dia:          0,
 						Mes:          "",
@@ -198,7 +198,7 @@ func (m*MatrizDispersa)InsertarNodo(FilaCategoria string, ColumnaDia int,Informa
 		Abajo:       nil,
 		Izquierda:   nil,
 		Derecha:     nil,
-		informacion:&Pedido{
+		Informacion:&Pedido{
 			Siguiente:    nil,
 			Dia:          Informacion.Dia,
 			Mes:          Informacion.Mes,
@@ -216,7 +216,7 @@ func (m*MatrizDispersa)InsertarNodo(FilaCategoria string, ColumnaDia int,Informa
 	bandera1Fila:=true
 	for auxFila.Abajo!=nil{
 		auxFila=auxFila.Abajo
-		if strings.EqualFold(FilaCategoria,auxFila.informacion.Departamento){
+		if strings.EqualFold(FilaCategoria,auxFila.Informacion.Departamento){
 			if auxFila.Derecha==nil{
 
 				auxFila.Derecha=nuevo
@@ -229,20 +229,20 @@ func (m*MatrizDispersa)InsertarNodo(FilaCategoria string, ColumnaDia int,Informa
 						aux1=aux1.Arriba
 					}
 
-					if ColumnaDia<aux1.informacion.Dia{
+					if ColumnaDia<aux1.Informacion.Dia{
 						bandera1Fila=false
 						aux2:=auxFila.Izquierda
 						nuevo.Derecha=auxFila
 						nuevo.Izquierda=aux2
 						auxFila.Izquierda=nuevo
 						aux2.Derecha=nuevo
-					}else if ColumnaDia>aux1.informacion.Dia&&auxFila.Derecha==nil&&bandera1Fila{
+					}else if ColumnaDia>aux1.Informacion.Dia&&auxFila.Derecha==nil&&bandera1Fila{
 						bandera1Fila=false
 						nuevo.Izquierda=auxFila
 						auxFila.Derecha=nuevo
-					}else if ColumnaDia==aux1.informacion.Dia&&bandera1Fila{
+					}else if ColumnaDia==aux1.Informacion.Dia&&bandera1Fila{
 						banderaUniversal=false
-						aux2:=auxFila.informacion
+						aux2:=auxFila.Informacion
 						for aux2.Siguiente!=nil{
 							aux2=aux2.Siguiente
 						}
@@ -276,7 +276,7 @@ func (m*MatrizDispersa)InsertarNodo(FilaCategoria string, ColumnaDia int,Informa
 	banderaColumna:=true
 	for auxColumna.Derecha!=nil{
 		auxColumna=auxColumna.Derecha
-		if auxColumna.informacion.Dia==ColumnaDia{
+		if auxColumna.Informacion.Dia==ColumnaDia{
 			if auxColumna.Abajo==nil{
 				auxColumna.Abajo=nuevo
 				nuevo.Arriba=auxColumna
@@ -289,7 +289,7 @@ func (m*MatrizDispersa)InsertarNodo(FilaCategoria string, ColumnaDia int,Informa
 						comparadorFila=comparadorFila.Izquierda
 					}
 					for comparadorFila.Arriba!=nil{
-						if strings.EqualFold(comparadorFila.informacion.Departamento,FilaCategoria)&&banderaUniversal{
+						if strings.EqualFold(comparadorFila.Informacion.Departamento,FilaCategoria)&&banderaUniversal{
 							banderaColumna=false
 							aux3:=auxColumna.Arriba
 							nuevo.Arriba=aux3
@@ -319,6 +319,7 @@ func (m MatrizDispersa)InsertarPedido(datos Pedido){
 	m.CrearColumna(datos.Dia)
 	m.GenerarFila(datos.Departamento)
 	m.InsertarNodo(datos.Departamento,datos.Dia,datos)
+
 }
 func (m MatrizDispersa)Imprimir(){
 	auxColumna:=m.Nodoinicio
@@ -326,12 +327,12 @@ func (m MatrizDispersa)Imprimir(){
 
 	for auxColumna.Derecha!=nil{
 		auxColumna=auxColumna.Derecha
-		fmt.Print("       	   ",auxColumna.informacion.Dia," ")
+		fmt.Print("       	   ",auxColumna.Informacion.Dia," ")
 	}
 	fmt.Println(" ")
 	for auxFila.Abajo!=nil{
 
-		fmt.Print(auxFila.Abajo.informacion.Departamento," ")
+		fmt.Print(auxFila.Abajo.Informacion.Departamento," ")
 		auxFila=auxFila.Abajo
 		aux2:=auxFila
 		for aux2.Derecha!=nil{
@@ -345,12 +346,12 @@ func (m MatrizDispersa)Imprimir(){
 
 				aux3=aux3.Arriba
 			}
-			fmt.Print("(",auxFila.informacion.Departamento,",",aux3.informacion.Dia,")",aux2.informacion.Cliente)
-			desaux:=aux2.informacion
+			fmt.Print("(",auxFila.Informacion.Departamento,",",aux3.Informacion.Dia,")",aux2.Informacion.Cliente)
+			desaux:=aux2.Informacion
 			for desaux.Siguiente!=nil{
 				desaux=desaux.Siguiente
 
-				fmt.Print(" (",auxFila.informacion.Departamento,",",desaux.Dia,")",desaux.Cliente)
+				fmt.Print(" (",auxFila.Informacion.Departamento,",",desaux.Dia,")",desaux.Cliente)
 			}
 		}
 		fmt.Println(" ")

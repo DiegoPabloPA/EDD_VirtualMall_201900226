@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormControl} from "@angular/forms";
-import {  InventarioscargaService} from "../../servicios/inventarioscarga.service";
-
+import { PedidosMasivosService } from "../../servicios/pedidos-masivos.service";
 @Component({
-  selector: 'app-cargainventarios',
-  templateUrl: './cargainventarios.component.html',
-  styleUrls: ['./cargainventarios.component.css']
+  selector: 'app-carga-masiva-pedidos',
+  templateUrl: './carga-masiva-pedidos.component.html',
+  styleUrls: ['./carga-masiva-pedidos.component.css']
 })
-export class CargainventariosComponent implements OnInit {
+export class CargaMasivaPedidosComponent implements OnInit {
 
-  constructor(private cargaMInventario:InventarioscargaService) { }
+  constructor(private cargaMInventario:PedidosMasivosService) { }
   informacion=new FormControl('')
   mostrarMensaje=false
   mostrarMensajeError=false
 
+
+
+
   prueba(){
-    this.cargaMInventario.postCargaMasivaInventarios(this.informacion.value).subscribe((res:any)=>{
+    this.cargaMInventario.postCargaMasivaPedidos(this.informacion.value).subscribe((res:any)=>{
       this.mostrarMensaje=true
       this.informacion.setValue("")
     },(err)=>{

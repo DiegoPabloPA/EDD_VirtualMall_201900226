@@ -6,6 +6,9 @@ import {  CargainventariosComponent} from "./componentes/cargainventarios/cargai
 import { TiendasdisponiblesComponent } from "./componentes/tiendasdisponibles/tiendasdisponibles.component";
 import { TiendaComponent } from "./componentes/tienda/tienda.component";
 import { ConfirmarcarritoComponent } from './componentes/confirmarcarrito/confirmarcarrito.component';
+import { InformesComponent } from './componentes/informes/informes.component';
+import { InformesPedidoService } from "./servicios/informes-pedido.service";
+import { CargaMasivaPedidosComponent } from "./componentes/carga-masiva-pedidos/carga-masiva-pedidos.component";
 const routes: Routes = [
   {path:'',
   component:StartComponent,
@@ -13,6 +16,11 @@ const routes: Routes = [
   path:"cargarTiendas",
   component:CargartiendasComponent,
 },
+{
+  path:"cargarPedidosMasivo",
+  component:CargaMasivaPedidosComponent
+},
+
 {
   path:"cargarInventarios",
   component:CargainventariosComponent
@@ -28,6 +36,11 @@ const routes: Routes = [
 {
   path:"confirmarPedido",
   component:ConfirmarcarritoComponent
+},
+{
+  path:"InformePedidos",
+  component:InformesComponent
+
 }
 
 

@@ -1,0 +1,70 @@
+<div class="general">
+<div class="Menu">
+    <h3>Reportes Disponibles:</h3>
+    <h4 *ngFor="let item of anio">
+        {{item.Anio}}:
+      <br>
+      <div class="SubMenu">
+            <button *ngFor="let item2 of item.Meses"  (click)="GirarOrden(item.Anio,item2.Mes)" type="button" class="btn btn-success">{{item2.Mes}}</button>
+        </div>     
+                
+        </h4>
+        
+        
+        
+        <ul class="list-group">
+            <li class="list-group-item"><a href="http://localhost:3000/DownAVLAnio">Descargar Informe por Años</a></li>
+            <li class="list-group-item"><a href="http://localhost:3000/DownAVLMes">Descargar Informe por Meses</a></li>
+            <li *ngIf="condicion" class="list-group-item"><a  href="http://localhost:3000/DownMatriz">Guardar Matriz</a></li>
+            <li *ngIf="condicion2"class="list-group-item"><a  href="http://localhost:3000/DownReporteDia">Guardar Reporte por Dia</a></li>
+            
+          </ul>
+
+        
+
+       
+</div>
+<div class="info">
+    <h3 *ngIf="condicion">Reportes Disponibles Mes de {{titulomes}} del {{tituloanio}}</h3>
+    <img *ngIf="condicion" src="http://localhost:3000/MostrarMatriz">
+    <div ng *ngIf="condicion" class="categorias">
+        
+        <h5 *ngFor="let item of CategoriaDia">
+            {{item.Categoria}}
+            <div class="SubDias">
+                <button *ngFor="let item2 of item.Dias" (click)="GenerarReporteDia(item.Categoria,item2.Dia)" type="button" class="btn btn-warning">{{item2.Dia}}</button>
+            </div>
+
+        </h5>
+
+    </div>
+    <div *ngIf="condicion2" class="informe">
+        <h4>Reporte Dia {{titulodia}} Categoria: {{titulocate}}</h4>
+        <table class="table table-dark">
+            <thead>
+              <tr>
+                <th scope="col">Categoria</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Codigo</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ReporteDia">
+                    
+                    <td>{{item.Categoria}}</td>
+                    <td>{{item.Direccion}}</td>
+                    <td *ngFor="let item2 of item.Descripcion">{{item2.Cantidad}}<br></td>
+                    <td *ngFor="let item2 of item.Descripcion">{{item2.Codigo}}<br></td>
+                  </tr>
+            </tbody>
+          </table>
+     
+    </div> 
+</div>
+
+    
+
+</div>
+
+

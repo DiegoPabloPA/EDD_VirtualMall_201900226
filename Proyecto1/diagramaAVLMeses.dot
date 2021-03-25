@@ -1,0 +1,9 @@
+digraph G{
+node[shape=circle];
+NodoRaiz[label="2021"];
+subgraph meses{
+    style = rounded;
+NodRaiz[label="Marzo"];
+
+}NodoRaiz-> NodRaiz [lhead = meses];
+}

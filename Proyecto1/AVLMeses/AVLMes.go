@@ -2,6 +2,7 @@ package AVLMeses
 
 import (
 	"Proyecto1/MatrizDispersa"
+	"fmt"
 	"strings"
 )
 
@@ -27,6 +28,17 @@ func Mayor(numa int,numb int)int{
 	return numb
 
 }
+func Imprimir(nodo *NodoAVLMes){
+	if nodo!=nil{
+		nodo.Datos.Matriz.Imprimir()
+		Imprimir(nodo.Izquierda)
+		fmt.Println(nodo.Datos.Mes)
+		nodo.Datos.Matriz.Imprimir()
+		Imprimir(nodo.Derecha)
+	}
+}
+
+
 func Altura(evaluar *NodoAVLMes)int{
 	if evaluar==nil{
 		return -1
@@ -52,12 +64,12 @@ func RotacionSimpleDerecha(evaluar *NodoAVLMes)*NodoAVLMes{
 	return evaluar
 }
 func RotacionDobleIzquierda(evaluar *NodoAVLMes)*NodoAVLMes{
-	evaluar=RotacionSimpleDerecha(evaluar)
+	evaluar.Izquierda=RotacionSimpleDerecha(evaluar.Izquierda)
 	evaluar=RotacionSimpleIzquierda(evaluar)
 	return evaluar
 }
 func RotacionDobleDerecha(evaluar *NodoAVLMes)*NodoAVLMes{
-	evaluar=RotacionSimpleIzquierda(evaluar)
+	evaluar.Derecha=RotacionSimpleIzquierda(evaluar.Derecha)
 	evaluar=RotacionSimpleDerecha(evaluar)
 	return evaluar
 }
@@ -91,6 +103,35 @@ func SeleccionMes(mes string) int{
 	}
 
 }
+func ConvertirMes(mesIngles string)string{
+	if strings.EqualFold(mesIngles,"January"){
+		return "Enero"
+	}else if strings.EqualFold(mesIngles,"February"){
+		return "Febrero"
+	}else if strings.EqualFold(mesIngles,"March"){
+		return "Marzo"
+	}else if strings.EqualFold(mesIngles,"April"){
+		return "Abril"
+	}else if strings.EqualFold(mesIngles,"May"){
+		return "Mayo"
+	}else if strings.EqualFold(mesIngles,"June"){
+		return "Junio"
+	}else if strings.EqualFold(mesIngles,"July"){
+		return "Julio"
+	}else if strings.EqualFold(mesIngles,"August"){
+		return "Agosto"
+	}else if strings.EqualFold(mesIngles,"September"){
+		return "Septiembre"
+	}else if strings.EqualFold(mesIngles,"October"){
+		return "Octubre"
+	}else if strings.EqualFold(mesIngles,"November"){
+		return "Noviembre"
+	}else if strings.EqualFold(mesIngles,"December"){
+		return "Diciembre"
+	}else{
+		return ""
+	}
+}
 
 func  Insertar(nodo *NodoAVLMes,datos MatrizDispersa.Pedido)*NodoAVLMes{
 	nuevo:=&NodoAVLMes{
@@ -98,27 +139,30 @@ func  Insertar(nodo *NodoAVLMes,datos MatrizDispersa.Pedido)*NodoAVLMes{
 		Derecha:   nil,
 		Altura:    0,
 		Datos:     DatosMesAvl{
-			NoMes:  SeleccionMes(datos.Mes),
-			Mes:    datos.Mes,
-			Matriz: nil,
+			NoMes:  SeleccionMes(ConvertirMes(datos.Mes)),
+			Mes:    ConvertirMes(datos.Mes),
+			Matriz: &MatrizDispersa.MatrizDispersa{Nodoinicio: nil},
 		},
 	}
 	if nodo==nil{
 		nuevo.Datos.Matriz.Init()
 		nuevo.Datos.Matriz.InsertarPedido(datos)
 		return nuevo
-	}else if  nodo.Datos.NoMes>SeleccionMes(datos.Mes){
+	}
+
+	if  nodo.Datos.NoMes>SeleccionMes(ConvertirMes(datos.Mes)){
 		nodo.Izquierda=Insertar(nodo.Izquierda,datos)
-		if Altura(nodo.Izquierda)-Altura(nodo.Derecha)==-2{
-			if SeleccionMes(datos.Mes)<nodo.Izquierda.Altura{
+		if Altura(nodo.Izquierda)-Altura(nodo.Derecha)==2{
+			if SeleccionMes(ConvertirMes(datos.Mes))<nodo.Izquierda.Datos.NoMes{
 				nodo=RotacionSimpleIzquierda(nodo)
 			}else{
 				nodo=RotacionDobleIzquierda(nodo)
 			}
-		}}else if nodo.Datos.NoMes<SeleccionMes(datos.Mes){
+		}
+	}else if nodo.Datos.NoMes<SeleccionMes(ConvertirMes(datos.Mes)){
 		nodo.Derecha=Insertar(nodo.Derecha,datos)
 		if Altura(nodo.Derecha)-Altura(nodo.Izquierda)==2{
-			if SeleccionMes(datos.Mes)>nodo.Datos.NoMes{
+			if SeleccionMes(ConvertirMes(datos.Mes))>nodo.Datos.NoMes{
 				nodo=RotacionSimpleDerecha(nodo)
 
 			}else{
@@ -129,5 +173,6 @@ func  Insertar(nodo *NodoAVLMes,datos MatrizDispersa.Pedido)*NodoAVLMes{
 		nodo.Datos.Matriz.InsertarPedido(datos)
 	}
 	nodo.Altura=Mayor(Altura(nodo.Izquierda),Altura(nodo.Derecha))+1
+
 	return nodo
 }

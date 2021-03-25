@@ -1,0 +1,20 @@
+digraph dot{
+n[shape=none label=<<table><tr>
+<td>Categoria</td>
+<td>Direccion</td>
+<td>Cantidad</td>
+<td>Codigo</td>
+</tr>
+<tr>
+<td>
+Amazon Coins</td>
+<td>
+Guatemala</td>
+<td>
+1</td>
+<td>
+1233</td>
+
+</tr>
+</table>>];
+}

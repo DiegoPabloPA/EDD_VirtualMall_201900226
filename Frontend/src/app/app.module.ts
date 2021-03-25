@@ -10,6 +10,8 @@ import { CargainventariosComponent } from './componentes/cargainventarios/cargai
 import { TiendasdisponiblesComponent } from './componentes/tiendasdisponibles/tiendasdisponibles.component';
 import { TiendaComponent } from './componentes/tienda/tienda.component';
 import { ConfirmarcarritoComponent } from './componentes/confirmarcarrito/confirmarcarrito.component';
+import { InformesComponent } from './componentes/informes/informes.component';
+import { CargaMasivaPedidosComponent } from './componentes/carga-masiva-pedidos/carga-masiva-pedidos.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { ConfirmarcarritoComponent } from './componentes/confirmarcarrito/confir
     CargainventariosComponent,
     TiendasdisponiblesComponent,
     TiendaComponent,
-    ConfirmarcarritoComponent
+    ConfirmarcarritoComponent,
+    InformesComponent,
+    CargaMasivaPedidosComponent
   ],
   imports: [
     BrowserModule,

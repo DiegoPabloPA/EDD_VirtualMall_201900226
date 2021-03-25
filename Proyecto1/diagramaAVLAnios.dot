@@ -1,0 +1,5 @@
+digraph G{
+node[shape=circle];
+NodoRaiz[label="2021"];
+
+}

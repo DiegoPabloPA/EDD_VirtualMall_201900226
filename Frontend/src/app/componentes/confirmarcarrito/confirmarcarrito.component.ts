@@ -54,4 +54,19 @@ export class ConfirmarcarritoComponent implements OnInit {
     window.location.href="/tiendasDisponibles"
   }
 
+  EjecutrarCompra(){
+    this.compra.getConfirmarPedido().subscribe((res:any)=>{
+      console.log(res)
+      
+
+
+    },(err)=>{
+      
+    }
+    
+    )
+
+    window.location.href="/confirmarPedido"
+  }
+
 }

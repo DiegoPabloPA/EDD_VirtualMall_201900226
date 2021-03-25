@@ -53,7 +53,7 @@ func ConvertirCarritoDesc(carroActual []Carrito.JsonPedidoIndv,arreglo []ListaDo
 									Total:    float64(carroActual[a].Cantidad)*aux2.Datos.Precio,
 								}
 								descJsonCompra=append(descJsonCompra,nuevo)
-								aux2=nil
+								aux2=aux2.Derecha
 							}
 						}
 					}

@@ -1,0 +1,65 @@
+.informe{
+    text-align: center;
+}
+.info img{
+    margin: auto;
+    display: block;
+}
+.list-group{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.Menu a{
+    text-decoration: none;
+    text-align: center;
+    font-family: arial;
+    font-weight: bold;
+    color: #000;
+}
+
+
+
+.Menu{
+    float: left;
+    margin: auto;
+    display: block;
+    margin-left: 4%;
+    margin-top: 5%;
+    width: 25%;
+}
+.Menu h4{
+    margin-left: 4%;
+}
+
+.SubMenu{
+    margin-top: 2%;
+    
+}
+.SubMenu button{
+    margin-top: 5%;
+    margin-left: 5%;
+    
+}
+.info{
+    width: 60%;
+    
+    float: left;
+    margin-right: 10%;
+    margin-top: 5%;
+
+}
+.info h3{
+    text-align: center;
+}
+.categorias{
+ margin-left: 5%;
+ margin-top: 5%;
+ margin-bottom: 5%;
+ margin-right: 5%;
+}
+.SubDias button{
+    margin-left: 4%;
+    margin-top: 5%;
+    margin-bottom: 3%;
+}
