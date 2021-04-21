@@ -1,0 +1,77 @@
+digraph G{
+node[shape=circle];
+edge[dir="both"];
+rankdir=LR
+Nodo0[label="A"];
+Nodo1[label="B"];
+Nodo2[label="C"];
+Nodo3[label="D"];
+Nodo4[label="E"];
+Nodo5[label="F"];
+Nodo6[label="G"];
+Nodo7[label="H"];
+Nodo8[label="I"];
+Nodo9[label="J"];
+Nodo10[label="K"];
+Nodo11[label="L"];
+Nodo12[label="M"];
+Nodo13[label="N"];
+Nodo14[label="P"];
+Nodo0->Nodo1[label="8"];
+Nodo0->Nodo4[label="4"];
+Nodo0->Nodo3[label="5"];
+Nodo1->Nodo2[label="3"];
+Nodo1->Nodo5[label="4"];
+Nodo1->Nodo4[label="12"];
+Nodo2->Nodo6[label="11"];
+Nodo2->Nodo5[label="9"];
+Nodo3->Nodo4[label="9"];
+Nodo3->Nodo7[label="6"];
+Nodo4->Nodo5[label="3"];
+Nodo4->Nodo9[label="5"];
+Nodo4->Nodo8[label="8"];
+Nodo5->Nodo6[label="1"];
+Nodo5->Nodo10[label="8"];
+Nodo6->Nodo11[label="7"];
+Nodo6->Nodo10[label="8"];
+Nodo7->Nodo8[label="2"];
+Nodo7->Nodo12[label="7"];
+Nodo8->Nodo9[label="10"];
+Nodo8->Nodo12[label="6"];
+Nodo9->Nodo10[label="6"];
+Nodo9->Nodo13[label="9"];
+Nodo10->Nodo11[label="5"];
+Nodo10->Nodo14[label="7"];
+Nodo11->Nodo14[label="6"];
+Nodo12->Nodo13[label="2"];
+Nodo13->Nodo14[label="12"];
+n[shape=none label=<<table><tr>
+<td>Recorrido</td>
+</tr>
+<tr>
+<td>
+A E F 
+</td>
+</tr>
+<tr>
+<td>
+F B C 
+</td>
+</tr>
+<tr>
+<td>
+C B F E I 
+</td>
+</tr>
+<tr>
+<td>
+I M N P 
+</td>
+</tr>
+<tr>
+<td>
+P N  
+</td>
+</tr>
+</table>>];
+}

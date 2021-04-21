@@ -1,0 +1,29 @@
+<div class="contenedor1">
+
+<h3>Informes de Usuarios</h3>
+<div class="cod">
+    <p>Ingrese una clave para la encriptación:</p>
+    <input type="text" placeholder="Código" [formControl]="codigo">
+    <button type="button" (click)="enviarClave()" class="btn btn-success">Generar</button>
+</div>
+<div class="informes">
+    <table class="table" *ngIf="condicion">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Arbol Normal</th>
+            <th scope="col">Arbol Cifrado</th>
+            <th scope="col">Árbol con Cifrado Sensible</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><button type="button" (click)="Descarga1()" class="btn btn-success">Descargar</button></td>
+            <td><button type="button" (click)="Descarga2()" class="btn btn-success">Descargar</button></td>
+            <td><button type="button" (click)="Descarga3()" class="btn btn-success">Descargar</button></td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+
+</div>

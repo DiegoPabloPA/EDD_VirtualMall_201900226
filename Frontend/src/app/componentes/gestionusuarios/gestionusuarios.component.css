@@ -1,0 +1,26 @@
+.contenedor1{
+    margin-top: 4%;
+    margin-left: 15%;
+    margin-bottom: 29%;
+}
+.cod{
+    width: 100%;
+    margin-bottom: 10%;
+}
+
+.cod input{
+    margin-top: 1%;
+    float: left;
+    width: 20%;
+    margin-left: 30%;
+}
+.cod button{
+    margin-left: 5%;
+}
+
+.informes{
+width: 50%;
+float: left;
+margin-left: 15%;
+text-align: center;
+}

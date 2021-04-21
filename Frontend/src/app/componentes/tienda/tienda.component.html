@@ -22,16 +22,7 @@
 
 
 <div class="general">
-    <div class="cargaInv">
-        <div class="tituloCargaTiendas">
-            <p>Carga de Inventario</p>
-        </div>
-        <form >
-            <textarea [formControl]="textoarea"  cols="40" rows="15" style="resize: none"></textarea>
-            <button (click)="enviarInventario()" type="button"  class="btn btn-success">Cargar</button>
-        </form>
-
-    </div>
+    
 <div class="infoTienda">
     <div  *ngFor="let item of informacion">
         <img *ngIf="item==Logo" src={{respuesta[item]}}>

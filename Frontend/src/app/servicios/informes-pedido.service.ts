@@ -29,6 +29,13 @@ export class InformesPedidoService {
     const httpOptions={ headers:new HttpHeaders({ 'Content-Type':'application/json' }), 
   }; return this.http.post<any>(serverGo+'InformeDia',res,httpOptions) }
 
+  getTracking():Observable<any>{ 
+    const httpOptions={ headers:new HttpHeaders({ 'Content-Type':'application/json' }), 
+  }; return this.http.get<any>(serverGo+'BuscarTracks',httpOptions) }
+
+ getDescargaTrack(res):Observable<any>{ 
+    const httpOptions={ headers:new HttpHeaders({ 'Content-Type':'application/json' }), 
+  }; return this.http.get<any>(serverGo+'DescargaTrack/'+res,httpOptions) }
   
   
 

@@ -1,0 +1,30 @@
+.areadeJson{
+    width: 100%;
+    height: 616px;
+}
+textarea{
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 470px;
+}
+.tituloCargaTiendas{
+    background-color: rgb(116, 9, 9);
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 50px;
+    margin-top: 2%;
+    border-radius:  15px 0px 15px;
+}
+.tituloCargaTiendas p{
+    color: rgb(255, 255, 255);
+    font-size: 25px;
+    margin-left: 10%;
+    margin-top: 2%;
+}
+.areadeJson button{
+     margin-left: 5%;
+     margin-right: 5%;
+     width: 90%;
+     height: 60px;
+}

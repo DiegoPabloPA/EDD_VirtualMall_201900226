@@ -5,7 +5,7 @@ type AVL struct {
 }
 type DatosNodoArbol struct{
 	Codigo int
-	Nombre,Descripcion,Imagen string
+	Nombre,Descripcion,Imagen,Almacenamiento string
 	Precio float64
 	Cantidad int
 }
@@ -24,6 +24,7 @@ type InventarioIndividual struct {
 	Precio      float64 `json:"Precio"`
 	Cantidad    int     `json:"Cantidad"`
 	Imagen      string  `json:"Imagen"`
+	Almacenamiento string `json:"Almacenamiento"`
 }
 type EstructuraBusqueda struct {
 	Departamento string `json:"Departamento"`

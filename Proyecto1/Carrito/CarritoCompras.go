@@ -5,6 +5,12 @@ import (
 	"strings"
 )
 
+type NombreCliente struct {
+	Nombre string `json:"Nombre"`
+}
+
+
+
 type JsonPedidoIndv struct {
 	Departamento string `json:"Departamento"`
 	Nombre       string `json:"Nombre"`

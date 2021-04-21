@@ -1,0 +1,17 @@
+.general{
+    margin-left: 25%;
+    
+    height: 503px;
+}
+.recuadro1{
+    width: 70%;
+    
+    text-align: center;
+    margin-top: 10%;
+}
+.recuadro1 input{
+    margin-top: 5%;
+}
+.recuadro1 button{
+    margin-top: 5%;
+}

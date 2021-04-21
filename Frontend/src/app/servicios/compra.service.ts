@@ -36,6 +36,15 @@ export class CompraService {
     return this.http.post<any>(serverGo+'EjecutarCompra',httpOptions)
 
   }
+  postNombreCliente(infor):Observable<any>{
+    const httpOptions={
+      headers:new HttpHeaders({
+        'Content-Type':'application/json'
+      }),
+    };
+    return this.http.post<any>(serverGo+'NombreCliente',infor,httpOptions)
+
+  }
  
 
 

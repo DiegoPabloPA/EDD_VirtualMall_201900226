@@ -12,7 +12,12 @@ import { TiendaComponent } from './componentes/tienda/tienda.component';
 import { ConfirmarcarritoComponent } from './componentes/confirmarcarrito/confirmarcarrito.component';
 import { InformesComponent } from './componentes/informes/informes.component';
 import { CargaMasivaPedidosComponent } from './componentes/carga-masiva-pedidos/carga-masiva-pedidos.component';
-
+import { LoginComponent } from './componentes/login/login.component';
+import { AuthGuard } from "./auth.guard";
+import { RegistroComponent } from './componentes/registro/registro.component';
+import { SubidagrafoComponent } from './componentes/subidagrafo/subidagrafo.component';
+import { CargaUsuariosComponent } from './componentes/carga-usuarios/carga-usuarios.component';
+import { GestionusuariosComponent } from './componentes/gestionusuarios/gestionusuarios.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +28,12 @@ import { CargaMasivaPedidosComponent } from './componentes/carga-masiva-pedidos/
     TiendaComponent,
     ConfirmarcarritoComponent,
     InformesComponent,
-    CargaMasivaPedidosComponent
+    CargaMasivaPedidosComponent,
+    LoginComponent,
+    RegistroComponent,
+    SubidagrafoComponent,
+    CargaUsuariosComponent,
+    GestionusuariosComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +42,7 @@ import { CargaMasivaPedidosComponent } from './componentes/carga-masiva-pedidos/
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

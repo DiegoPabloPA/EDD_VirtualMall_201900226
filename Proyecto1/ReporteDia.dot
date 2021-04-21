@@ -7,13 +7,25 @@ n[shape=none label=<<table><tr>
 </tr>
 <tr>
 <td>
-Amazon Coins</td>
+Tecnologia</td>
 <td>
 Guatemala</td>
 <td>
-1</td>
+1;1;</td>
 <td>
-1233</td>
+1234;1233;</td>
+
+</tr>
+
+<tr>
+<td>
+Tecnologia</td>
+<td>
+Guatemala</td>
+<td>
+1;1;1;1;</td>
+<td>
+1234;1233;1222;1232;</td>
 
 </tr>
 </table>>];

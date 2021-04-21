@@ -7,4 +7,21 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Frontend';
+condicion1():Boolean{
+  if(localStorage.getItem("Logueado")==="true"){
+    return true
+  }
+  return false
+}
+condicion2():Boolean{
+  if(localStorage.getItem("tipoUsuario")==="Admin"){
+   return true
+  }
+  return false
+}
+
+cerrar(){
+  localStorage.clear()
+}
+
 }

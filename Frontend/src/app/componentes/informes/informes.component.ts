@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InformesPedidoService } from 'src/app/servicios/informes-pedido.service';
-import { DiaCategoria,DiaInforme } from "../../modelos/busqueda";
+import { DiaCategoria,DiaInforme,TrackNombre } from "../../modelos/busqueda";
 @Component({
   selector: 'app-informes',
   templateUrl: './informes.component.html',
@@ -11,6 +11,7 @@ export class InformesComponent implements OnInit {
   constructor(private informe: InformesPedidoService) { }
   CategoriaDia:any[]=[]
   anio:any[]=[]
+  Track:any[]=[]
   ReporteDia:any[]=[]
   condicion:boolean
   condicion2:boolean
@@ -20,7 +21,19 @@ export class InformesComponent implements OnInit {
   titulocate:string
   ngOnInit(): void {
     this.condicion=false
-    
+    this.informe.getTracking().subscribe((res: any) => {
+     
+      this.Track=res
+
+
+    }, (err) => {
+
+    }
+
+    )
+
+
+
     this.informe.getAVLAnios().subscribe((res: any) => {
       
 
@@ -98,6 +111,11 @@ export class InformesComponent implements OnInit {
 
     )
 
+  }
+  DescargarTrack(info){
+    
+
+    window.location.href="http://localhost:3000/DescargaTrack/"+info
   }
   
 

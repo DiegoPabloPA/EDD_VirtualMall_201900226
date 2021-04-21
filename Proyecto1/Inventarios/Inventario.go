@@ -53,6 +53,7 @@ func RotacionDobleDerecha(evaluar *EstructuraAVL.NodoArbol)*EstructuraAVL.NodoAr
 
 func  Insertar(nodo *EstructuraAVL.NodoArbol,datos EstructuraAVL.DatosNodoArbol)*EstructuraAVL.NodoArbol{
 	nuevo:=&EstructuraAVL.NodoArbol{Izquierda: nil, Derecha:   nil, Altura:    0, Datos:     datos}
+
 	if nodo==nil{
 		return nuevo
 	}
@@ -97,6 +98,8 @@ func EnviarDatos(nodo *EstructuraAVL.NodoArbol,resultado[]InventarioJson)(resul[
 			Precio:      nodo.Datos.Precio,
 			Cantidad:    nodo.Datos.Cantidad,
 			Imagen:      nodo.Datos.Imagen,
+			Almacenamiento: nodo.Datos.Almacenamiento,
+
 		}
 		resultado=append(resultado,datos)
 		resultado=EnviarDatos(nodo.Derecha,resultado)
@@ -112,6 +115,7 @@ type InventarioJson struct{
 	Precio      float64
 	Cantidad    int
 	Imagen      string
+	Almacenamiento string
 }
 type CargadeInventario struct {
 	Invetario []struct {
@@ -125,29 +129,36 @@ type CargadeInventario struct {
 			Precio      float64 `json:"Precio"`
 			Cantidad    int     `json:"Cantidad"`
 			Imagen      string  `json:"Imagen"`
+			Almacenamiento string `json:"Almacenamiento"`
 		} `json:"Productos"`
-	} `json:"Invetarios"`
+	} `json:"Inventarios"`
 }
 
 
 
 func CargaInventariosMasivo(arreglo []ListaDoble.ListaDE,informacion CargadeInventario)[]ListaDoble.ListaDE{
 	aux:=arreglo
+
 	for a:=0;a<len(informacion.Invetario);a++{
 		for b:=0;b<len(arreglo);b++{
 			if aux[b].Tamanio>0{
 				aux2:=aux[b].Inicio
+
 				for aux2!=nil{
 					if strings.EqualFold(informacion.Invetario[a].Tienda,aux2.Datos.Nombre)&&strings.EqualFold(informacion.Invetario[a].Departamento,aux2.Datos.Columna)&&informacion.Invetario[a].Calificacion==aux2.Datos.Calificacion{
 						for c:=0;c<len(informacion.Invetario[a].Productos);c++{
+
 							ingreso:=EstructuraAVL.DatosNodoArbol{
+
 								Codigo:      informacion.Invetario[a].Productos[c].Codigo,
 								Nombre:      informacion.Invetario[a].Productos[c].Nombre,
 								Descripcion: informacion.Invetario[a].Productos[c].Descripcion,
 								Imagen:      informacion.Invetario[a].Productos[c].Imagen,
 								Precio:      informacion.Invetario[a].Productos[c].Precio,
 								Cantidad:    informacion.Invetario[a].Productos[c].Cantidad,
+								Almacenamiento: informacion.Invetario[a].Productos[c].Almacenamiento,
 							}
+
 							aux2.Datos.Inventario.Raiz=Insertar(aux2.Datos.Inventario.Raiz,ingreso)
 
 						}
@@ -193,6 +204,7 @@ func CargaInventariosIndividual(arreglo []ListaDoble.ListaDE,informacion Estruct
 			if aux[b].Tamanio>0{
 				aux2:=aux[b].Inicio
 				for aux2!=nil{
+
 					if strings.EqualFold(estructura.Nombre,aux2.Datos.Nombre)&&strings.EqualFold(estructura.Departamento,aux2.Datos.Columna)&&estructura.Calificacion==aux2.Datos.Calificacion{
 
 							ingreso:=EstructuraAVL.DatosNodoArbol{
@@ -202,6 +214,7 @@ func CargaInventariosIndividual(arreglo []ListaDoble.ListaDE,informacion Estruct
 								Imagen:      informacion.Imagen,
 								Precio:      informacion.Precio,
 								Cantidad:    informacion.Cantidad,
+								Almacenamiento: informacion.Almacenamiento,
 							}
 							aux2.Datos.Inventario.Raiz=Insertar(aux2.Datos.Inventario.Raiz,ingreso)
 

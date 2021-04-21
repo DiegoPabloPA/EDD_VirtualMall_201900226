@@ -4,6 +4,7 @@ import (
 	"Proyecto1/AVLAnio"
 	"Proyecto1/ListaDoble"
 	"Proyecto1/MatrizDispersa"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -23,11 +24,15 @@ type JsonPedidosMasivo struct {
 
 func CargaMasiva(datos JsonPedidosMasivo,Arreglo []ListaDoble.ListaDE,pedidos *AVLAnio.NodoAVLAnio)*AVLAnio.NodoAVLAnio{
 bandera:=false
+
 for a:=0;a<len(datos.Pedidos);a++{
+	fmt.Println(a)
 	for b:=0;b<len(Arreglo);b++{
+
 		if Arreglo[b].Tamanio>0{
 			aux:=Arreglo[b].Inicio
 			for aux!=nil{
+
 				if strings.EqualFold(datos.Pedidos[a].Tienda,aux.Datos.Nombre)&&strings.EqualFold(datos.Pedidos[a].Departamento,aux.Datos.Columna)&&datos.Pedidos[a].Calificacion==aux.Datos.Calificacion{
 
 
@@ -35,6 +40,7 @@ for a:=0;a<len(datos.Pedidos);a++{
 					for c:=0;c<len(datos.Pedidos[a].Productos);c++{
 						aux2:=aux.Datos.Inventario.Raiz
 						for aux2!=nil{
+
 							if aux2.Datos.Codigo>datos.Pedidos[a].Productos[c].Codigo{
 								aux2=aux2.Izquierda
 							}else if aux2.Datos.Codigo<datos.Pedidos[a].Productos[c].Codigo{
@@ -46,16 +52,21 @@ for a:=0;a<len(datos.Pedidos);a++{
 						}
 					}
 						if len(confirmar)==len(datos.Pedidos[a].Productos){
+
+
 							bandera=true
 
 						}
 				confirmar=nil
 				}
 				aux=aux.Siguiente
+
 			}
 		}
 	}
 if bandera{
+
+
 	fecha:=strings.Split(datos.Pedidos[a].Fecha,"-")
 	dia,_:=strconv.Atoi(fecha[0])
 	mes,_:=strconv.Atoi(fecha[1])
@@ -72,6 +83,8 @@ nuevo:=MatrizDispersa.Pedido{
 	Calificacion: datos.Pedidos[a].Calificacion,
 	Descripcion:  nil,
 }
+
+
 var registro []Producto
 for m:=0;m<len(datos.Pedidos[a].Productos);m++{
 	if len(registro)<0{
@@ -98,19 +111,22 @@ for m:=0;m<len(datos.Pedidos[a].Productos);m++{
 	}
 }
 for v:=0;v<len(registro);v++{
+
 	recupera:=MatrizDispersa.DescripcionPedido{
 		Codigo:   registro[v].Codigo,
 		Cantidad: registro[v].Cantidad,
 	}
 	nuevo.Descripcion=append(nuevo.Descripcion,recupera)
 }
-
+fmt.Println(nuevo)
 pedidos=AVLAnio.Insertar(pedidos,nuevo)
 
 }
 
 bandera=false
+
 }
+
 
 return pedidos
 }

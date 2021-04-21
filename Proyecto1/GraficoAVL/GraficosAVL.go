@@ -54,7 +54,7 @@ func RecorrerAVLAniosMeses(nodo *AVLAnio.NodoAVLAnio,info string)string{
  	info+="NodoRaiz"+strconv.Itoa(contp)+"[label=\""+strconv.Itoa(nodo.Izquierda.Datos.Anio)+"\"];\n"
 	 info+="subgraph meses"+strconv.Itoa(contp)+"{\n    style = rounded;\n"
 	 info+="NodRaiz"+strconv.Itoa(contp)+"[label=\""+nodo.Izquierda.Datos.AVLdeMes.Raiz.Datos.Mes+"\"];\n"
-	 cont=1
+	 cont+=1
 	 info=RecorrerAVLMeses("NodRaiz"+strconv.Itoa(contp),nodo.Izquierda.Datos.AVLdeMes.Raiz,info)
 	 info+="\n}"
 	 info+="NodoRaiz"+strconv.Itoa(contp)+"->"+"NodRaiz"+strconv.Itoa(contp)+"[lhead = meses"+strconv.Itoa(contp)+"];\n"
@@ -65,7 +65,7 @@ func RecorrerAVLAniosMeses(nodo *AVLAnio.NodoAVLAnio,info string)string{
 	 info+="NodoRaiz"+strconv.Itoa(contp)+"[label=\""+strconv.Itoa(nodo.Derecha.Datos.Anio)+"\"];\n"
 	 info+="subgraph meses"+strconv.Itoa(contp)+"{\n    style = rounded;\n"
 	 info+="NodRaiz"+strconv.Itoa(contp)+"[label=\""+nodo.Derecha.Datos.AVLdeMes.Raiz.Datos.Mes+"\"];\n"
-	 cont=1
+	 cont+=1
 	 info=RecorrerAVLMeses("NodRaiz"+strconv.Itoa(contp),nodo.Derecha.Datos.AVLdeMes.Raiz,info)
 	 info+="\n}"
 	 info+="NodoRaiz"+strconv.Itoa(contp)+"->"+"NodRaiz"+strconv.Itoa(contp)+"[lhead = meses"+strconv.Itoa(contp)+"];\n"

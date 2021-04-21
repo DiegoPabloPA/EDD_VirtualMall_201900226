@@ -45,6 +45,7 @@
               <tr>
                 <th scope="col">Categoria</th>
                 <th scope="col">Direccion</th>
+                <th scope="col">Cliente</th>
                 <th scope="col">Cantidad</th>
                 <th scope="col">Codigo</th>
               </tr>
@@ -54,6 +55,7 @@
                     
                     <td>{{item.Categoria}}</td>
                     <td>{{item.Direccion}}</td>
+                    <td>{{item.Cliente}}</td>
                     <td *ngFor="let item2 of item.Descripcion">{{item2.Cantidad}}<br></td>
                     <td *ngFor="let item2 of item.Descripcion">{{item2.Codigo}}<br></td>
                   </tr>
@@ -61,6 +63,27 @@
           </table>
      
     </div> 
+    <div class="informe">
+      <h4>Reporte De Tracks</h4>
+      <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Cliente</th>
+              <th scope="col">Gráfico</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let item of Track">
+                  
+                  <td>{{item.NombreCliente}}</td>
+                  <td><button (click)="DescargarTrack(item.NombreArchivo)" type="button" class="btn btn-info">Descarga</button></td>
+                  
+                </tr>
+          </tbody>
+        </table>
+   
+  </div>
 </div>
 
     

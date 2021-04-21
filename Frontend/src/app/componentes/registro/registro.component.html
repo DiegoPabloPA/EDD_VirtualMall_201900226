@@ -1,0 +1,12 @@
+<div class="general">
+    <div class="recuadro1">
+        <h3>Ingrese sus datos:</h3>
+        <form>
+        <input [formControl]="nom" type="text" class="form-control" aria-label="Default" placeholder="Ingrese su nombre"  aria-describedby="inputGroup-sizing-default"required>
+        <input [formControl]="corr" type="email" class="form-control" aria-label="Default" placeholder="Ingrese su correo electronico"  aria-describedby="inputGroup-sizing-default"required>
+        <input [formControl]="dpi_" type="number" class="form-control" aria-label="Default" placeholder="Ingrese su No. de DPI" aria-describedby="inputGroup-sizing-default"required>
+        <input [formControl]="contra" type="password" class="form-control" aria-label="Default" placeholder="Ingrese su Contraseña"  aria-describedby="inputGroup-sizing-default"required>
+        <button type="button" (click)="agregarUsuario()"  class="btn btn-success">Registrarse</button>
+    </form>
+    </div>
+</div>

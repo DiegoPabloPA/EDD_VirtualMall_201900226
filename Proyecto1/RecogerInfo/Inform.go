@@ -24,8 +24,13 @@ import (
 	"Proyecto1/MenuAnios"
 	"Proyecto1/OrdenAlfabetico"
 	"Proyecto1/ReportesDiaCategoria"
+	"Proyecto1/Tracking"
+	Usuarios2 "Proyecto1/Usuarios"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"github.com/fernet/fernet-go"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"io/ioutil"
@@ -37,7 +42,7 @@ import (
 	"strings"
 	"time"
 )
-
+var Usuarios Usuarios2.ArbolB
 var Informacion vector.InfoVector
 var Inventarios Inventarios2.CargadeInventario
 var InventarioInd EstructuraAVL.InventarioIndividual
@@ -48,6 +53,11 @@ var fila[]string
 var Pedidos AVLAnio.AVLAnio
 var columna[]string
 var ubicacionTienda EstructuraAVL.EstructuraBusqueda
+var NombreCliente string
+var EstructuraFunciones Tracking.ListaVertices
+var EstructuraGraphviz Tracking.ListaVertices
+var GrafoAUtilizar string
+var DatosGraph []Tracking.DatosGraphviz
 func Path(){
 	router:=mux.NewRouter()
 	router.HandleFunc("/",PaginaInicio)
@@ -77,6 +87,18 @@ func Path(){
 	router.HandleFunc("/DownMatriz",DescargaMatriz)
 	router.HandleFunc("/DownReporteDia",DescargaInformeDia)
 	router.HandleFunc("/MostrarMatriz",MostrarMatriz)
+	router.HandleFunc("/RegistrarUsuario",CrearUsuario).Methods("POST")
+	router.HandleFunc("/NombreCliente",RecibirNombreCliente).Methods("POST")
+	router.HandleFunc("/CargaNodosGrafo",CargadeNodos).Methods("POST")
+	router.HandleFunc("/BuscarUsuario",BuscarUsuario).Methods("POST")
+	router.HandleFunc("/UsuarioMasivo",InsertarUsuariosMasivos).Methods("POST")
+	router.HandleFunc("/DescargaTrack/{ide}",DescargaTrack)
+	router.HandleFunc("/BuscarTracks",ObtenerTrackings).Methods("GET")
+	router.HandleFunc("/GenerarUsuariosNormal",GenerarArbolBNormal).Methods("GET")
+	router.HandleFunc("/Encriptacion/{ide}",Encriptacion)
+	router.HandleFunc("/ArbolNormalB",DescargaArbolBNormal)
+	router.HandleFunc("/Cifrado2B",DescargaArbolBCifradoCompleto)
+	router.HandleFunc("/Cifrado3B",DescargaArbolBCifradoSensible)
 
 
 
@@ -85,6 +107,145 @@ func Path(){
 
 
 }
+func GenerarArbolBNormal(w http.ResponseWriter, req *http.Request){
+	if Usuarios.Raiz!=nil{
+		info:=Usuarios2.GenerarGrafoArbolB(Usuarios.Raiz)
+		conv:=[]byte(info)
+		generacion:=ioutil.WriteFile("ReporteUsuarios.dot",conv,0644)
+		if generacion!=nil{
+			log.Fatal(generacion)
+		}
+		graph, _ := exec.LookPath("dot")
+		direccion,_:=os.Getwd()
+		consola, _ := exec.Command(graph, "-Tpng",direccion+"/ReporteUsuarios.dot").Output()
+		ioutil.WriteFile("ReporteUsuarios.png", consola, 0777)
+
+	}
+}
+
+
+func InsertarUsuariosMasivos(w http.ResponseWriter, req *http.Request){
+	respuesta, _ := ioutil.ReadAll(req.Body)
+	var nuevo Usuarios2.CargaMasivaUsuarios
+	if err := json.Unmarshal(respuesta, &nuevo); err != nil {
+		panic(err)
+
+	}
+	if Usuarios.Raiz==nil{
+		Usuarios.Raiz=Usuarios.IniciarArbolB(Usuarios.Raiz)
+		nuevo2:=Usuarios2.DatosUsuario{
+			DPI:      1234567890101,
+			Correo:   "auxiliar@edd.com",
+			Password: "1234",
+			Nombre:   "EDD2021",
+			Cuenta: "Admin",
+		}
+		Usuarios.Raiz=Usuarios.Raiz.Insertar(nuevo2,Usuarios.Raiz)
+		Usuarios.Raiz=Usuarios2.InsercionMasivaUsuarios(Usuarios.Raiz,nuevo)
+
+
+	}else{
+		Usuarios.Raiz=Usuarios2.InsercionMasivaUsuarios(Usuarios.Raiz,nuevo)
+
+	}
+}
+
+
+func BuscarUsuario(w http.ResponseWriter, req *http.Request){
+	respuesta, _ := ioutil.ReadAll(req.Body)
+	var nuevo Usuarios2.SolicitudLogueo
+	if err := json.Unmarshal(respuesta, &nuevo); err != nil {
+		panic(err)
+
+	}
+	if Usuarios.Raiz==nil{
+		Usuarios.Raiz=Usuarios.IniciarArbolB(Usuarios.Raiz)
+		nuevo2:=Usuarios2.DatosUsuario{
+			DPI:      1234567890101,
+			Correo:   "auxiliar@edd.com",
+			Password: "1234",
+			Nombre:   "EDD2021",
+			Cuenta: "Admin",
+		}
+
+
+		Usuarios.Raiz=Usuarios.Raiz.Insertar(nuevo2,Usuarios.Raiz)
+		info:=Usuarios.Raiz.BuscarUsuario(nuevo)
+
+		if info.DPI!=0{
+			AJson,_:=json.Marshal(info)
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			w.Write(AJson)
+		}else{
+			info.DPI=-1
+			AJson,_:=json.Marshal(info)
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			w.Write(AJson)
+		}
+
+	}else{
+		info:=Usuarios.Raiz.BuscarUsuario(nuevo)
+		if info.DPI!=0{
+			AJson,_:=json.Marshal(info)
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			w.Write(AJson)
+		}else{
+			info.DPI=-1
+			AJson,_:=json.Marshal(info)
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			w.Write(AJson)
+		}
+
+	}
+
+
+
+
+
+
+}
+
+
+func CrearUsuario(w http.ResponseWriter, req *http.Request){
+	respuesta, _ := ioutil.ReadAll(req.Body)
+	var nuevo Usuarios2.UsuarioNormal
+	if err := json.Unmarshal(respuesta, &nuevo); err != nil {
+		panic(err)
+
+	}
+	nuevo3:=Usuarios2.DatosUsuario{
+		DPI:      nuevo.Dpi,
+		Correo:   nuevo.Correo,
+		Password: nuevo.Password,
+		Nombre:   nuevo.Nombre,
+		Cuenta: nuevo.Cuenta,
+	}
+
+
+	if Usuarios.Raiz==nil{
+	Usuarios.Raiz=Usuarios.IniciarArbolB(Usuarios.Raiz)
+	nuevo2:=Usuarios2.DatosUsuario{
+		DPI:      1234567890101,
+		Correo:   "auxiliar@edd.com",
+		Password: "1234",
+		Nombre:   "EDD2021",
+		Cuenta: "Admin",
+	}
+
+
+	Usuarios.Raiz=Usuarios.Raiz.Insertar(nuevo2,Usuarios.Raiz)
+	Usuarios.Raiz=Usuarios.Raiz.Insertar(nuevo3,Usuarios.Raiz)
+}else{
+		Usuarios.Raiz=Usuarios.Raiz.Insertar(nuevo3,Usuarios.Raiz)
+	}
+
+
+}
+
 func CargaMasivaPedidos(w http.ResponseWriter, req *http.Request){
 	if len(Arreglo)>0{
 		respuesta, _ := ioutil.ReadAll(req.Body)
@@ -93,10 +254,50 @@ func CargaMasivaPedidos(w http.ResponseWriter, req *http.Request){
 			panic(err)
 
 		}
+
 		Pedidos.Raiz=CargaPedidos.CargaMasiva(busqueda,Arreglo,Pedidos.Raiz)
 
 	}
+
 }
+func Encriptacion(w http.ResponseWriter, req *http.Request){
+	if Usuarios.Raiz!=nil{
+		Dato:=mux.Vars(req)
+		No:=Dato["ide"]
+		generador:=sha256.New()
+		generador.Write([]byte(No))
+		preliminar:=generador.Sum(nil)
+		preliminar2:=hex.EncodeToString(preliminar)
+		llave:=fernet.MustDecodeKeys(preliminar2)
+		grafo1:=Usuarios2.GenerarGrafoArbolBCifradoCompleto(Usuarios.Raiz,llave)
+		grafo2:=Usuarios2.GenerarGrafoArbolBCifradoSensible(Usuarios.Raiz,llave)
+		conv:=[]byte(grafo1)
+		generacion:=ioutil.WriteFile("CifradoCompleto.dot",conv,0644)
+		if generacion!=nil{
+			log.Fatal(generacion)
+		}
+		graph, _ := exec.LookPath("dot")
+		direccion,_:=os.Getwd()
+		consola, _ := exec.Command(graph, "-Tpdf",direccion+"/CifradoCompleto.dot").Output()
+		ioutil.WriteFile("CifradoCompleto.pdf", consola, 0777)
+
+		conv2:=[]byte(grafo2)
+		generacion2:=ioutil.WriteFile("CifradoSensible.dot",conv2,0644)
+		if generacion2!=nil{
+			log.Fatal(generacion2)
+		}
+		graph2, _ := exec.LookPath("dot")
+		direccion2,_:=os.Getwd()
+		consola2, _ := exec.Command(graph2, "-Tpdf",direccion2+"/CifradoSensible.dot").Output()
+		ioutil.WriteFile("CifradoSensible.pdf", consola2, 0777)
+
+
+	}
+
+}
+
+
+
 
 func JsonReporteDia(w http.ResponseWriter, req *http.Request){
 	if Pedidos.Raiz!=nil {
@@ -208,7 +409,7 @@ func RealizarPedido(w http.ResponseWriter, req *http.Request){
 				Dia:          t.Day(),
 				Mes:          t.Month().String(),
 				Anio:         t.Year(),
-				Cliente:      "",
+				Cliente:      NombreCliente,
 				Direccion:    "Guatemala",
 				NombreTienda: "",
 				Departamento: CarroActual[a].Departamento,
@@ -244,9 +445,37 @@ func RealizarPedido(w http.ResponseWriter, req *http.Request){
 
 		}
 	}
-	Arreglo=CambioInventario.EfectuarCompra(Arreglo,CarroActual)
+	Aux:=CarroActual
 	CarroActual=nil
+	Arreglo=CambioInventario.EfectuarCompra(Arreglo,CarroActual)
+	Nuevo:=Tracking.GenerarGrafoSegunPedido(NombreCliente,Aux,Arreglo)
+	d:=Tracking.ListadeGrafos(Nuevo,EstructuraFunciones)
+	DatosGraph=append(DatosGraph,Tracking.GeneracionGraphviz(d,GrafoAUtilizar,strconv.Itoa(len(DatosGraph))))
+
 }
+func CargadeNodos(w http.ResponseWriter, req *http.Request){
+	respuesta, _ := ioutil.ReadAll(req.Body)
+	var datos Tracking.ArchivoGrafoJson
+	if err := json.Unmarshal(respuesta, &datos); err != nil {
+		panic(err)
+
+	}
+	EstructuraFunciones.Inicio=Tracking.IniciarListaVertices()
+	EstructuraGraphviz.Inicio=Tracking.IniciarListaVertices()
+	EstructuraFunciones.AnadirInformacionTrack(datos)
+	EstructuraGraphviz.ListaGrafo(datos)
+	GrafoAUtilizar=EstructuraGraphviz.Grafo(GrafoAUtilizar)
+}
+func ObtenerTrackings(w http.ResponseWriter, req *http.Request){
+	if len(DatosGraph)>0{
+		AJson,_:=json.Marshal(DatosGraph)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(AJson)
+	}
+}
+
+
 
 func Compra(w http.ResponseWriter, req *http.Request){
 	if len(Arreglo)==0{
@@ -271,7 +500,7 @@ func EliminarCarrito(w http.ResponseWriter, req *http.Request){
 
 		}
 		CarroActual=EnviarCarrito.EliminardelCarrito(busqueda,CarroActual)
-		fmt.Println(CarroActual)
+
 	}
 }
 
@@ -378,6 +607,15 @@ if len(Encontradas)==0{
 
 func PaginaInicio(w http.ResponseWriter, req *http.Request){
 	fmt.Fprintf(w,"TODOS LOS DERECHOS RESERVADOS")
+}
+func RecibirNombreCliente(w http.ResponseWriter, req *http.Request){
+	var NomCliente Carrito.NombreCliente
+	respuesta,_:=ioutil.ReadAll(req.Body)
+	if err := json.Unmarshal(respuesta, &NomCliente); err != nil {
+		panic(err)
+
+	}
+	NombreCliente=NomCliente.Nombre
 }
 
 func RecibirCarrito(w http.ResponseWriter, req *http.Request){
@@ -561,15 +799,7 @@ func CargaMasivaInventario(w http.ResponseWriter, req *http.Request){
 
 		Arreglo=Inventarios2.CargaInventariosMasivo(Arreglo,Inventarios)
 
-		for a:=0;a<len(Arreglo);a++{
-			if Arreglo[a].Tamanio!=0{
-				aux4:=Arreglo[a].Inicio
-				for aux4!=nil{
-					Inventarios2.Imprimir(aux4.Datos.Inventario.Raiz)
-					aux4=aux4.Siguiente
-				}
-			}
-		}
+
 	}
 }
 func CargaIndividualInventario(w http.ResponseWriter, req *http.Request){
@@ -604,6 +834,7 @@ func DescargaAVLAnio(w http.ResponseWriter, req *http.Request){
 	w.Header().Set("Content-Disposition", "attachment; filename="+"AVLAnios.png")
 	w.Header().Set("Content-Type", "application/image")
 	http.ServeFile(w, req, "AVLAnios.png")
+
 }
 func DescargaAVLMeses(w http.ResponseWriter, req *http.Request){
 	w.Header().Set("Content-Disposition", "attachment; filename="+"AVLMeses.png")
@@ -619,4 +850,28 @@ func DescargaInformeDia(w http.ResponseWriter, req *http.Request){
 	w.Header().Set("Content-Disposition", "attachment; filename="+"Informe.pdf")
 	w.Header().Set("Content-Type", "application/pdf")
 	http.ServeFile(w, req, "ReporteDia.pdf")
+}
+func DescargaTrack(w http.ResponseWriter, req *http.Request){
+	Dato:=mux.Vars(req)
+	No:=Dato["ide"]
+	w.Header().Set("Content-Disposition", "attachment; filename="+No)
+	w.Header().Set("Content-Type", "application/image")
+	http.ServeFile(w, req, No)
+
+}
+func DescargaArbolBNormal(w http.ResponseWriter, req *http.Request){
+	w.Header().Set("Content-Disposition", "attachment; filename="+"ReporteUsuarios.png")
+	w.Header().Set("Content-Type", "application/image")
+	http.ServeFile(w, req, "ReporteUsuarios.png")
+
+}
+func DescargaArbolBCifradoCompleto(w http.ResponseWriter, req *http.Request){
+	w.Header().Set("Content-Disposition", "attachment; filename="+"CifradoCompleto.pdf")
+	w.Header().Set("Content-Type", "application/pdf")
+	http.ServeFile(w, req, "CifradoCompleto.pdf")
+}
+func DescargaArbolBCifradoSensible(w http.ResponseWriter, req *http.Request){
+	w.Header().Set("Content-Disposition", "attachment; filename="+"CifradoSensible.pdf")
+	w.Header().Set("Content-Type", "application/pdf")
+	http.ServeFile(w, req, "CifradoSensible.pdf")
 }

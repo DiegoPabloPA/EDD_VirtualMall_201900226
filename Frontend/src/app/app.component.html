@@ -6,24 +6,44 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item active">
+        <li class="nav-item active"*ngIf="condicion1()&&condicion2()">
           <a class="nav-link" href="/cargarTiendas">Carga de tiendas</a>
         </li>
-        <li class="nav-item">
+        <li  class="nav-item"*ngIf="condicion1()&&condicion2()">
           <a class="nav-link" href="/cargarInventarios">Carga de inventarios</a>
         </li>
-        <li class="nav-item">
+        <li  class="nav-item"*ngIf="condicion1()&&condicion2()">
+          <a class="nav-link" href="/cargarUsuarios">Carga de Usuarios</a>
+        </li>
+        
+        <li  class="nav-item"*ngIf="condicion1()&&condicion2()">
+          <a class="nav-link" href="/EncriptarUsuarios">Gestion de Usuarios</a>
+        </li>
+        <li  class="nav-item"*ngIf="condicion1()&&condicion2()">
+          <a class="nav-link" href="/cargarGrafo">Carga de Grafo</a>
+        </li>
+        <li class="nav-item"*ngIf="condicion1()&&!condicion2()">
           <a class="nav-link" href="/tiendasDisponibles">Tiendas Disponibles</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"*ngIf="condicion1()&&!condicion2()">
           <a class="nav-link" href="/confirmarPedido">Carrito de Compras</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"*ngIf="condicion1()&&condicion2()">
           <a class="nav-link" href="/cargarPedidosMasivo">Carga de Pedidos</a>
       </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/InformePedidos">Informes de Pedidos</a>
+          <li class="nav-item"*ngIf="condicion1()&&condicion2()">
+            <a class="nav-link" href="/InformePedidos">Informes</a>
         </li>
+        <li (click)="cerrar()" class="nav-item"*ngIf="condicion1()">
+          <a class="nav-link" href="/Login">Cerrar Sesión</a>
+      </li>
+
+        <li *ngIf="!condicion1()&&!condicion2()" class="nav-item">
+          <a class="nav-link" href="/Login">Iniciar Sesión</a>
+      </li>
+      <li *ngIf="!condicion1()&&!condicion2()" class="nav-item">
+        <a class="nav-link" href="/Registro">Registrarse</a>
+    </li>
       </ul>
     </div>
   </nav>

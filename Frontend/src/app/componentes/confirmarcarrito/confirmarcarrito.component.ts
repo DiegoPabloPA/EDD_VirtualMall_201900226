@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CompraService } from "../../servicios/compra.service";
-import { EliminarArticulo } from "../../modelos/busqueda";
+import { EliminarArticulo,Nombre } from "../../modelos/busqueda";
 
 @Component({
   selector: 'app-confirmarcarrito',
@@ -27,6 +27,20 @@ export class ConfirmarcarritoComponent implements OnInit {
       }
       
       )
+      var Nombre:Nombre={
+        Nombre:localStorage.getItem("NombreUsuario")
+      }
+      this.compra.postNombreCliente(Nombre).subscribe((res:any)=>{
+      
+        
+  
+  
+        },(err)=>{
+          
+        }
+        
+        )
+
 
 
   }
@@ -58,7 +72,7 @@ export class ConfirmarcarritoComponent implements OnInit {
     this.compra.getConfirmarPedido().subscribe((res:any)=>{
       console.log(res)
       
-
+      window.location.href="/confirmarPedido"
 
     },(err)=>{
       

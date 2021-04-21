@@ -59,7 +59,7 @@ func RotacionSimpleDerecha(evaluar *NodoAVLMes)*NodoAVLMes{
 	evaluar.Derecha=aux1.Izquierda
 	aux1.Izquierda=evaluar
 	evaluar.Altura=Mayor(Altura(evaluar.Izquierda),Altura(evaluar.Derecha))+1
-	aux1.Altura=Mayor(Altura(evaluar.Derecha),evaluar.Altura)+1
+	aux1.Altura=Mayor(Altura(evaluar.Izquierda),evaluar.Altura)+1
 	evaluar=aux1
 	return evaluar
 }
@@ -148,9 +148,7 @@ func  Insertar(nodo *NodoAVLMes,datos MatrizDispersa.Pedido)*NodoAVLMes{
 		nuevo.Datos.Matriz.Init()
 		nuevo.Datos.Matriz.InsertarPedido(datos)
 		return nuevo
-	}
-
-	if  nodo.Datos.NoMes>SeleccionMes(ConvertirMes(datos.Mes)){
+	}else if  nodo.Datos.NoMes>SeleccionMes(ConvertirMes(datos.Mes)){
 		nodo.Izquierda=Insertar(nodo.Izquierda,datos)
 		if Altura(nodo.Izquierda)-Altura(nodo.Derecha)==2{
 			if SeleccionMes(ConvertirMes(datos.Mes))<nodo.Izquierda.Datos.NoMes{

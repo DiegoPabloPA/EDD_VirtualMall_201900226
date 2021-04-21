@@ -62,3 +62,44 @@ export class DiaInforme{
        
     }
 }
+
+export class NuevoUsuario{
+    
+    Dpi:number
+    Nombre:string
+    Correo:string
+    Password:string
+    Cuenta:string
+
+    constructor(dpi_:number,nom:string,cor:string,pas:string,cue:string){
+        this.Dpi=dpi_
+        this.Nombre=nom
+        this.Correo=cor
+        this.Password=pas
+        this.Cuenta=cue
+    }
+}
+
+export class BuscarLogin{
+    Dpi:number
+    Password:string
+
+    constructor(dpi:number,pass:string){
+        this.Dpi=dpi
+        this.Password=pass
+
+    }
+}
+
+export class Nombre{
+    Nombre:string
+    constructor(nom:string){
+        this.Nombre=nom
+    }
+}
+export class TrackNombre{
+    Imagen:string
+    constructor(nom:string){
+        this.Imagen=nom
+    }
+}

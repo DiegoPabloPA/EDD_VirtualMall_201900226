@@ -19,6 +19,7 @@ type DescripcionPedido struct {
 type RespuestaDiaSolicitado struct {
 	Categoria string
 	Direccion string
+	Cliente string
 	Descripcion []DescripcionPedido
 
 }
@@ -54,6 +55,7 @@ func GenerarReporte(nodo *AVLAnio.NodoAVLAnio,solicitud JsonReporteDiaSolicitado
 										nuevo:=RespuestaDiaSolicitado{
 											Categoria:   aux5.Departamento,
 											Direccion: aux5.Direccion,
+											Cliente: aux5.Cliente,
 											Descripcion: nil,
 										}
 										for a:=0;a<len(aux5.Descripcion);a++{

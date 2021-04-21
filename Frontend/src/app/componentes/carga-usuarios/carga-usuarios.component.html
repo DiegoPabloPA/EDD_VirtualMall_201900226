@@ -1,0 +1,32 @@
+<div *ngIf="mostrarMensaje" class="row justify-content-around">
+    <div class="col-md-5">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Usuarios cargados exitosamente!
+            <button type="button" (click)="desactivarMensajes()" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div *ngIf="mostrarMensajeError" class="row justify-content-around">
+    <div class="col-md-5">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Error en la carga del archivo
+            <button type="button" (click)="desactivarMensajes()" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div class="tituloCargaTiendas">
+    <p>Carga de Usuarios Masivos</p>
+</div>
+
+<div class="areadeJson">
+    <form >
+    <textarea [formControl]="informacion" cols="40" rows="5" style="resize: none"></textarea>
+    <button type="button" (click)="prueba()" class="btn btn-success">Cargar</button>
+</form>
+</div>
