@@ -1,5 +1,7 @@
 package EstructuraAVL
 
+import "Proyecto1/Comentarios"
+
 type AVL struct {
 	Raiz *NodoArbol
 }
@@ -8,6 +10,7 @@ type DatosNodoArbol struct{
 	Nombre,Descripcion,Imagen,Almacenamiento string
 	Precio float64
 	Cantidad int
+	Comentario []Comentarios.DatosComentarios
 }
 
 

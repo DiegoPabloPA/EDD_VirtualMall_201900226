@@ -19,6 +19,46 @@ export class TiendaService {
     return this.http.post<any>(serverGo+'TiendaEspecifica',archivo,httpOptions)
 
   }
+  postComentarioPrincipalTienda(archivo):Observable<any>{
+    const httpOptions={
+      headers:new HttpHeaders({
+        'Content-Type':'application/json'
+      }),
+    };
+    return this.http.post<any>(serverGo+'ComentarioTienda',archivo,httpOptions)
+
+  }
+  postSubComentario(archivo):Observable<any>{
+    const httpOptions={
+      headers:new HttpHeaders({
+        'Content-Type':'application/json'
+      }),
+    };
+    return this.http.post<any>(serverGo+'agregarSubComentario',archivo,httpOptions)
+
+  }
+  postComentarioPrincipalArticulo(archivo):Observable<any>{
+    const httpOptions={
+      headers:new HttpHeaders({
+        'Content-Type':'application/json'
+      }),
+    };
+    return this.http.post<any>(serverGo+'ComentarioArticulo',archivo,httpOptions)
+
+  }
+  postSubComentarioArticulo(archivo):Observable<any>{
+    const httpOptions={
+      headers:new HttpHeaders({
+        'Content-Type':'application/json'
+      }),
+    };
+    return this.http.post<any>(serverGo+'agregarSubComentarioArticulo',archivo,httpOptions)
+
+  }
+
+
+
+
   postCargarInventario(archivo):Observable<any>{
     const httpOptions={
       headers:new HttpHeaders({

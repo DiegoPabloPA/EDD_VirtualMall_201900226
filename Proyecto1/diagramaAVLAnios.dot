@@ -1,5 +1,7 @@
 digraph G{
 node[shape=circle];
-NodoRaiz[label="2021"];
+NodoRaiz[label="1997"];
+Nodo1[label="2021"];
+NodoRaiz->Nodo1;
 
 }

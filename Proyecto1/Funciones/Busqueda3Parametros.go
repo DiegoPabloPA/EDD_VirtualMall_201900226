@@ -1,6 +1,7 @@
 package Busqueda3Parametros
 
 import (
+	"Proyecto1/Comentarios"
 	Inventarios2 "Proyecto1/Inventarios"
 	"Proyecto1/ListaDoble"
 	"encoding/json"
@@ -21,6 +22,7 @@ type EstructuraRespuesta struct {
 	Nombre,Descripcion,Contacto string
 	Calificacion int
 	Logo string
+	Comentarios []Comentarios.DatosComentarios
 }
 type EstructuraFallido struct {
 	Mensaje string
@@ -43,6 +45,7 @@ func Buscar3Param(parametro EstructuraBusqueda,informacion []ListaDoble.ListaDE)
 								Contacto:     aux.Datos.Contacto,
 								Calificacion: aux.Datos.Calificacion,
 								Logo: aux.Datos.Logo,
+								Comentarios: aux.Datos.Comentarios,
 							}
 							AJson,_=json.Marshal(envio)
 							aux=nil

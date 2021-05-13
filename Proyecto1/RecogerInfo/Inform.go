@@ -7,6 +7,7 @@ import (
 	"Proyecto1/CambioInventario"
 	"Proyecto1/CargaPedidos"
 	"Proyecto1/Carrito"
+	"Proyecto1/Comentarios"
 	"Proyecto1/EnviarCarrito"
 	"Proyecto1/EstructuraAVL"
 	BusquedaNumero "Proyecto1/FuncionBusquedaNumero"
@@ -62,6 +63,10 @@ func Path(){
 	router:=mux.NewRouter()
 	router.HandleFunc("/",PaginaInicio)
 	router.HandleFunc("/cargartienda",AsignarInformacion).Methods("POST")
+	router.HandleFunc("/agregarSubComentario",IngresarSubComentario).Methods("POST")
+	router.HandleFunc("/agregarSubComentarioArticulo",IngresarSubComentarioArticulos).Methods("POST")
+	router.HandleFunc("/ComentarioTienda",IngresarComentario).Methods("POST")
+	router.HandleFunc("/ComentarioArticulo",IngresarComentarioPrincipalArticulos).Methods("POST")
 	router.HandleFunc("/getArreglo",GenerarGrafico).Methods("GET")
 	router.HandleFunc("/TiendaEspecifica",Busqueda3).Methods("POST")
 	router.HandleFunc("/AgregarCarrito",RecibirCarrito).Methods("POST")
@@ -539,6 +544,97 @@ func Eliminar(w http.ResponseWriter, req *http.Request){
 		}
 	}
 }
+func IngresarComentario(w http.ResponseWriter, req *http.Request){
+	respuesta, _ := ioutil.ReadAll(req.Body)
+	var busqueda Comentarios.EsqueletoComentario
+	if err := json.Unmarshal(respuesta, &busqueda); err != nil {
+		panic(err)
+
+	}
+	for a:=0;a<len(Arreglo);a++{
+		if Arreglo[a].Tamanio!=0{
+			aux:=Arreglo[a].Inicio
+			for aux!=nil{
+				if strings.EqualFold(aux.Datos.Nombre,busqueda.NombreSec)&&strings.EqualFold(aux.Datos.Columna,busqueda.Categoria)&&aux.Datos.Calificacion==busqueda.Calificacion{
+					aux.Datos.Comentarios=Comentarios.IngresarComentarioPrincipal(busqueda,aux.Datos.Comentarios)
+					bandera:=true
+					for bandera{
+						if strings.EqualFold(aux.Datos.Nombre,Arreglo[a].Inicio.Datos.Nombre)&&strings.EqualFold(aux.Datos.Descripcion,Arreglo[a].Inicio.Datos.Descripcion)&&aux.Datos.Calificacion==Arreglo[a].Inicio.Datos.Calificacion{
+							Arreglo[a].Inicio=aux
+							bandera=false
+						}else{
+							aux=aux.Anterior
+						}
+					}
+					bandera=true
+					for bandera{
+						if strings.EqualFold(aux.Datos.Nombre,Arreglo[a].Final.Datos.Nombre)&&strings.EqualFold(aux.Datos.Descripcion,Arreglo[a].Final.Datos.Descripcion)&&aux.Datos.Calificacion==Arreglo[a].Final.Datos.Calificacion{
+							Arreglo[a].Final=aux
+							bandera=false
+						}else{
+							aux=aux.Siguiente
+						}
+					}
+					aux=aux.Siguiente
+
+				}else{
+					aux=aux.Siguiente
+				}
+
+			}
+
+
+		}
+	}
+
+
+}
+
+func IngresarSubComentario(w http.ResponseWriter, req *http.Request){
+	respuesta, _ := ioutil.ReadAll(req.Body)
+	var busqueda Comentarios.EsqueletoSubComentario
+	if err := json.Unmarshal(respuesta, &busqueda); err != nil {
+		panic(err)
+
+	}
+	for a:=0;a<len(Arreglo);a++{
+		if Arreglo[a].Tamanio!=0{
+			aux:=Arreglo[a].Inicio
+			for aux!=nil{
+				if strings.EqualFold(aux.Datos.Nombre,busqueda.NombreSec)&&strings.EqualFold(aux.Datos.Columna,busqueda.Categoria)&&aux.Datos.Calificacion==busqueda.Calificacion{
+					aux.Datos.Comentarios=Comentarios.IngresarSubComentarios(busqueda,aux.Datos.Comentarios)
+					bandera:=true
+					for bandera{
+						if strings.EqualFold(aux.Datos.Nombre,Arreglo[a].Inicio.Datos.Nombre)&&strings.EqualFold(aux.Datos.Descripcion,Arreglo[a].Inicio.Datos.Descripcion)&&aux.Datos.Calificacion==Arreglo[a].Inicio.Datos.Calificacion{
+							Arreglo[a].Inicio=aux
+							bandera=false
+						}else{
+							aux=aux.Anterior
+						}
+					}
+					bandera=true
+					for bandera{
+						if strings.EqualFold(aux.Datos.Nombre,Arreglo[a].Final.Datos.Nombre)&&strings.EqualFold(aux.Datos.Descripcion,Arreglo[a].Final.Datos.Descripcion)&&aux.Datos.Calificacion==Arreglo[a].Final.Datos.Calificacion{
+							Arreglo[a].Final=aux
+							bandera=false
+						}else{
+							aux=aux.Siguiente
+						}
+					}
+					aux=aux.Siguiente
+
+				}else{
+					aux=aux.Siguiente
+				}
+
+			}
+
+
+		}
+	}
+}
+
+
 
 
 func Busqueda3(w http.ResponseWriter, req *http.Request){
@@ -575,7 +671,125 @@ func EnviarJsonInventario(w http.ResponseWriter, req *http.Request){
 		w.Write(Respuesta)
 	}
 }
+func IngresarComentarioPrincipalArticulos(w http.ResponseWriter, req *http.Request){
+	respuesta, _ := ioutil.ReadAll(req.Body)
+	var busqueda Comentarios.EsqueletoComentarioArticulo
+	if err := json.Unmarshal(respuesta, &busqueda); err != nil {
+		panic(err)
 
+	}
+	for a:=0;a<len(Arreglo);a++{
+		if Arreglo[a].Tamanio!=0{
+			aux:=Arreglo[a].Inicio
+			for aux!=nil{
+				if strings.EqualFold(aux.Datos.Nombre,busqueda.NombreSec)&&strings.EqualFold(aux.Datos.Columna,busqueda.Categoria)&&aux.Datos.Calificacion==busqueda.Calificacion{
+					aux2:=aux.Datos.Inventario.Raiz
+					for aux2!=nil{
+						if aux2.Datos.Codigo<busqueda.Codigo{
+
+							aux2=aux2.Derecha
+						}else if aux2.Datos.Codigo>busqueda.Codigo{
+
+							aux2=aux2.Izquierda
+						}else{
+							aux2.Datos.Comentario=Comentarios.IngresarComentarioPrincipalInventario(busqueda,aux2.Datos.Comentario)
+							aux2=aux2.Izquierda
+						}
+					}
+
+
+					bandera:=true
+					for bandera{
+						if strings.EqualFold(aux.Datos.Nombre,Arreglo[a].Inicio.Datos.Nombre)&&strings.EqualFold(aux.Datos.Descripcion,Arreglo[a].Inicio.Datos.Descripcion)&&aux.Datos.Calificacion==Arreglo[a].Inicio.Datos.Calificacion{
+							Arreglo[a].Inicio=aux
+							bandera=false
+						}else{
+							aux=aux.Anterior
+						}
+					}
+					bandera=true
+					for bandera{
+						if strings.EqualFold(aux.Datos.Nombre,Arreglo[a].Final.Datos.Nombre)&&strings.EqualFold(aux.Datos.Descripcion,Arreglo[a].Final.Datos.Descripcion)&&aux.Datos.Calificacion==Arreglo[a].Final.Datos.Calificacion{
+							Arreglo[a].Final=aux
+							bandera=false
+						}else{
+							aux=aux.Siguiente
+						}
+					}
+					aux=aux.Siguiente
+
+				}else{
+					aux=aux.Siguiente
+				}
+
+			}
+
+
+		}
+	}
+
+
+}
+
+func IngresarSubComentarioArticulos(w http.ResponseWriter, req *http.Request){
+	respuesta, _ := ioutil.ReadAll(req.Body)
+	var busqueda Comentarios.EsqueletoSubComentarioArticulo
+	if err := json.Unmarshal(respuesta, &busqueda); err != nil {
+		panic(err)
+
+	}
+	for a:=0;a<len(Arreglo);a++{
+		if Arreglo[a].Tamanio!=0{
+			aux:=Arreglo[a].Inicio
+			for aux!=nil{
+				if strings.EqualFold(aux.Datos.Nombre,busqueda.NombreSec)&&strings.EqualFold(aux.Datos.Columna,busqueda.Categoria)&&aux.Datos.Calificacion==busqueda.Calificacion{
+					aux2:=aux.Datos.Inventario.Raiz
+					for aux2!=nil{
+						if aux2.Datos.Codigo<busqueda.Codigo{
+
+							aux2=aux2.Derecha
+						}else if aux2.Datos.Codigo>busqueda.Codigo{
+
+							aux2=aux2.Izquierda
+						}else{
+							aux2.Datos.Comentario=Comentarios.IngresarSubComentariosArticulo(busqueda,aux2.Datos.Comentario)
+							aux2=aux2.Izquierda
+						}
+					}
+
+
+					bandera:=true
+					for bandera{
+						if strings.EqualFold(aux.Datos.Nombre,Arreglo[a].Inicio.Datos.Nombre)&&strings.EqualFold(aux.Datos.Descripcion,Arreglo[a].Inicio.Datos.Descripcion)&&aux.Datos.Calificacion==Arreglo[a].Inicio.Datos.Calificacion{
+							Arreglo[a].Inicio=aux
+							bandera=false
+						}else{
+							aux=aux.Anterior
+						}
+					}
+					bandera=true
+					for bandera{
+						if strings.EqualFold(aux.Datos.Nombre,Arreglo[a].Final.Datos.Nombre)&&strings.EqualFold(aux.Datos.Descripcion,Arreglo[a].Final.Datos.Descripcion)&&aux.Datos.Calificacion==Arreglo[a].Final.Datos.Calificacion{
+							Arreglo[a].Final=aux
+							bandera=false
+						}else{
+							aux=aux.Siguiente
+						}
+					}
+					aux=aux.Siguiente
+
+				}else{
+					aux=aux.Siguiente
+				}
+
+			}
+
+
+		}
+	}
+
+
+}
 
 
 func BusquedaPosicion(w http.ResponseWriter, req *http.Request){

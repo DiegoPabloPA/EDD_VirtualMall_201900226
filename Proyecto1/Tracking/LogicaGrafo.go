@@ -520,6 +520,11 @@ func ListadeGrafos (pedido PedidoConNombreClienteGrafo,Estructura ListaVertices)
 	for t:=0;t<len(n.Recorrido);t++{
 		grafo+=n.Recorrido[t]+" "
 	}
+	grafo+="|||"
+	n1:=Estructura.CaminoCorto(Estructura.PuntoEntrega,Estructura.PuntoInicio)
+	for t:=0;t<len(n1.Recorrido);t++{
+		grafo+=n1.Recorrido[t]+" "
+	}
 	grafo+=" "
 
 	retorno.ValorGrafo=grafo

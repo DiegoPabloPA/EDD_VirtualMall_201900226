@@ -1,9 +1,37 @@
 digraph G{
 node[shape=circle];
-NodoRaiz[label="2021"];
+NodoRaiz[label="1997"];
 subgraph meses{
     style = rounded;
-NodRaiz[label="Abril"];
+NodRaiz[label="Julio"];
+Nodo1[label="Junio"];
+NodRaiz->Nodo1;
+Nodo2[label="Febrero"];
+Nodo1->Nodo2;
+Nodo3[label="Enero"];
+Nodo2->Nodo3;
+Nodo4[label="Abril"];
+Nodo2->Nodo4;
+Nodo5[label="Marzo"];
+Nodo4->Nodo5;
+Nodo6[label="Mayo"];
+Nodo4->Nodo6;
+Nodo7[label="Octubre"];
+NodRaiz->Nodo7;
+Nodo8[label="Agosto"];
+Nodo7->Nodo8;
+Nodo9[label="Septiembre"];
+Nodo8->Nodo9;
+Nodo10[label="Noviembre"];
+Nodo7->Nodo10;
+Nodo11[label="Diciembre"];
+Nodo10->Nodo11;
 
 }NodoRaiz-> NodRaiz [lhead = meses];
+NodoRaiz1[label="2021"];
+subgraph meses1{
+    style = rounded;
+NodRaiz1[label="Abril"];
+
+}NodoRaiz1->NodRaiz1[lhead = meses1];
 }

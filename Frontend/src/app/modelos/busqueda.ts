@@ -103,3 +103,82 @@ export class TrackNombre{
         this.Imagen=nom
     }
 }
+
+export class ComentarioTienda{
+    DPI:number
+    NombreSec:string
+    Categoria:string
+    Calificacion:number
+    Nombre:string
+    Comentario:string
+    constructor(dp:number,nomsec:string,cat:string,cal:number,nom:string,coment:string){
+        this.DPI=dp
+        this.NombreSec=nomsec
+        this.Categoria=cat
+        this.Calificacion=cal
+        this.Nombre=nom
+        this.Comentario=coment
+    }
+    
+}
+
+export class SubComentarioTienda{
+    Clave:string
+    DPI:number
+    NombreSec:string
+    Categoria:string
+    Calificacion:number
+    Nombre:string
+    Comentario:string
+    constructor(dp:number,nomsec:string,cat:string,cal:number,nom:string,coment:string,cla:string){
+        this.Clave=cla
+        this.DPI=dp
+        this.NombreSec=nomsec
+        this.Categoria=cat
+        this.Calificacion=cal
+        this.Nombre=nom
+        this.Comentario=coment
+    }
+    
+}
+
+export class ComentarioArticulo{
+    Codigo:number
+    DPI:number
+    NombreSec:string
+    Categoria:string
+    Calificacion:number
+    Nombre:string
+    Comentario:string
+    constructor(cod:number,dp:number,nomsec:string,cat:string,cal:number,nom:string,coment:string){
+        this.Codigo=cod
+        this.DPI=dp
+        this.NombreSec=nomsec
+        this.Categoria=cat
+        this.Calificacion=cal
+        this.Nombre=nom
+        this.Comentario=coment
+    }
+    
+}
+export class SubComentarioArticulo{
+    Codigo:number
+    Clave:string
+    DPI:number
+    NombreSec:string
+    Categoria:string
+    Calificacion:number
+    Nombre:string
+    Comentario:string
+    constructor(cod:number,dp:number,nomsec:string,cat:string,cal:number,nom:string,coment:string,cla:string){
+        this.Codigo=cod
+        this.Clave=cla
+        this.DPI=dp
+        this.NombreSec=nomsec
+        this.Categoria=cat
+        this.Calificacion=cal
+        this.Nombre=nom
+        this.Comentario=coment
+    }
+    
+}

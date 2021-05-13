@@ -1,6 +1,7 @@
 package Inventarios
 
 import (
+	"Proyecto1/Comentarios"
 	"Proyecto1/EstructuraAVL"
 	"Proyecto1/ListaDoble"
 	"fmt"
@@ -99,6 +100,7 @@ func EnviarDatos(nodo *EstructuraAVL.NodoArbol,resultado[]InventarioJson)(resul[
 			Cantidad:    nodo.Datos.Cantidad,
 			Imagen:      nodo.Datos.Imagen,
 			Almacenamiento: nodo.Datos.Almacenamiento,
+			Comentarios: nodo.Datos.Comentario,
 
 		}
 		resultado=append(resultado,datos)
@@ -116,6 +118,7 @@ type InventarioJson struct{
 	Cantidad    int
 	Imagen      string
 	Almacenamiento string
+	Comentarios []Comentarios.DatosComentarios
 }
 type CargadeInventario struct {
 	Invetario []struct {
@@ -157,6 +160,7 @@ func CargaInventariosMasivo(arreglo []ListaDoble.ListaDE,informacion CargadeInve
 								Precio:      informacion.Invetario[a].Productos[c].Precio,
 								Cantidad:    informacion.Invetario[a].Productos[c].Cantidad,
 								Almacenamiento: informacion.Invetario[a].Productos[c].Almacenamiento,
+								Comentario: make([]Comentarios.DatosComentarios,7),
 							}
 
 							aux2.Datos.Inventario.Raiz=Insertar(aux2.Datos.Inventario.Raiz,ingreso)

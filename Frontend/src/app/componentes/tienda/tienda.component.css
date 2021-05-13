@@ -4,6 +4,36 @@
     display: inline-block;
     margin-bottom: 5%;
 }
+.comentariosTienda textarea{
+    width: 90%;
+    height: 25%;
+    margin-left: 5%;
+}
+.comentariosTienda button{
+    margin-left: 45%;
+    margin-bottom: 5%;
+}
+.coment{
+    margin-left: 5%;
+}
+.coment div div p{
+    text-align: justify;
+}
+.subComentarioTienda{
+    margin-left: 15%;
+
+}
+.subComentarioTienda div p{
+    font-size: medium;
+}
+ul li{
+list-style: none;    
+}
+.inforprod textarea{
+    width: 70%;
+    margin-left: 18%;
+}
+
 .cargaInv{
     width: 50%;
     height: 50%;

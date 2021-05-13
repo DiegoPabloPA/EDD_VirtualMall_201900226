@@ -26,7 +26,33 @@
 <div class="infoTienda">
     <div  *ngFor="let item of informacion">
         <img *ngIf="item==Logo" src={{respuesta[item]}}>
-       <h4 *ngIf="item!=Logo">{{item}}:</h4> <p *ngIf="item!=Logo">{{respuesta[item]}}</p>
+       <h4 *ngIf="(item!=Logo)&&(item!=Com)">{{item}}:</h4> <p *ngIf="(item!=Logo)&&(item!=Com)" >{{respuesta[item]}}</p>
+    </div>
+    <div class="comentariosTienda">
+        <h4>Comentarios:</h4>
+        <ul>
+        <div class="coment" *ngFor="let item of informacion">
+            <div *ngIf="item==Com">
+            <div *ngFor="let op of respuesta[item];let i = index">
+                <div *ngIf="op.NombreUsuario!=''">
+                    <li>
+                    <h6><b>{{op.NombreUsuario}}</b> comentó:</h6>
+                    <p>{{op.Comentario}}</p>
+                    
+                    <textarea [formControl]="textosubcomentarioTienda" placeholder="Escriba una Respuesta"></textarea>
+                    <button type="button" (click)="SubComentarioTienda(op.DPIPadre)" class="btn btn-info">Responder</button>
+                </li>
+                    <ng-container [ngTemplateOutlet]="op.SubComentarios >0 ? Hijo:Hijo "[ngTemplateOutletContext]="{recursivo:op.SubComentarios}">
+                    </ng-container>
+                
+                </div>
+        </div>
+        </div>
+        </div>
+
+        <textarea [formControl]="textoareacomentarioTienda" placeholder="Escriba un Comentario"></textarea>
+        <button (click)="ComentarioTienda()" type="button" class="btn btn-success">Enviar</button>
+    </ul>
     </div>
 
 </div>
@@ -43,6 +69,69 @@
 <h5>Precio:</h5><p>Q{{item.Precio}}</p>
 <h5>Cantidad:</h5><input id={{pInputCant[i]}} type="number" value=1 min="1">
 <button (click)="imprimirInventarios(pInputCant[i])" type="button" class="btn btn-success">Añadir al carrito de Compras</button>
+<h5>Comentarios:</h5>
+<div *ngFor="let op of item.Comentarios;let i = index">
+    <div *ngIf="op.NombreUsuario!=''">
+        <li>
+        <h6><b>{{op.NombreUsuario}}</b> comentó:</h6>
+        <p>{{op.Comentario}}</p>
+        
+        <textarea [formControl]="textosubcomentarioArticulo" placeholder="Escriba una Respuesta"></textarea>
+        <button type="button" (click)="SubComentarioArticulo(item.Codigo,op.DPIPadre)" class="btn btn-info">Responder</button>
+    </li>
+        <ng-container [ngTemplateOutlet]="op.SubComentarios >0 ? Hijo2:Hijo2 "[ngTemplateOutletContext]="{recursivo:op.SubComentarios,valor:item.Codigo}">
+        </ng-container>
+    
+    </div>
+</div>
+        <textarea [formControl]="textoareacomentarioArticulo" placeholder="Escriba un Comentario"></textarea>
+        <button (click)="ComentarioPrincipalArticulo(item.Codigo)" type="button" class="btn btn-success">Enviar</button>
+</div>
+</div>
 
-</div>
-</div>
+<ng-template #Hijo let-recursivo='recursivo'>
+    
+
+    <ul>
+    <div *ngFor="let op of recursivo;let i = index">
+        
+            <div *ngIf="op.NombreUsuario!=''">
+                <li>
+                <h6><b>{{op.NombreUsuario}}</b> Respondió:</h6>
+                <p>{{op.Comentario}}</p>
+                   
+
+                <textarea [formControl]="textosubcomentarioTienda" placeholder="Escriba una Respuesta"></textarea>
+                    <button type="button" (click)="SubComentarioTienda(op.DPIPadre)" class="btn btn-warning">Responder</button>
+            </li>
+        </div>
+        
+        <ng-container [ngTemplateOutlet]="op.SubComentarios >0 ? Hijo:Hijo "[ngTemplateOutletContext]="{recursivo:op.SubComentarios}">   
+        </ng-container>
+    </div>
+</ul>
+</ng-template>
+
+
+<ng-template #Hijo2 let-recursivo='recursivo' let-item='valor'>
+    
+
+    <ul>
+    <div *ngFor="let op of recursivo;let i = index">
+        
+            <div *ngIf="op.NombreUsuario!=''">
+                <li>
+                <h6><b>{{op.NombreUsuario}}</b> Respondió:</h6>
+                <p>{{op.Comentario}}</p>
+                   
+
+                <textarea [formControl]="textosubcomentarioArticulo" placeholder="Escriba una Respuesta"></textarea>
+                    <button type="button" (click)="SubComentarioArticulo(item,op.DPIPadre)" class="btn btn-warning">Responder</button>
+            </li>
+        </div>
+        
+        <ng-container [ngTemplateOutlet]="op.SubComentarios >0 ? Hijo2:Hijo2 "[ngTemplateOutletContext]="{recursivo:op.SubComentarios,valor:item}">   
+        </ng-container>
+    </div>
+</ul>
+</ng-template>

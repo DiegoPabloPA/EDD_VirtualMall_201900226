@@ -1,6 +1,7 @@
 package ArregloEstatico
 
 import (
+	"Proyecto1/Comentarios"
 	vector "Proyecto1/ListaDVec"
 	"Proyecto1/ListaDoble"
 	"strings"
@@ -64,7 +65,9 @@ func ColumnMajor(array []ListaDoble.ListaDE,Filas []string,Columnas[]string,Dato
 						Descripcion:  Datos.Indice1[a].Indice2[b].Tienda[d].Descripcion,
 						Contacto:     Datos.Indice1[a].Indice2[b].Tienda[d].Contacto,
 						Logo: Datos.Indice1[a].Indice2[b].Tienda[d].Logo,
+						Comentarios: make([]Comentarios.DatosComentarios,7),
 					}
+
 					tam:=Ingreso.Calificacion-1
 					ListaDoble.InsertarNuevaTienda(&Ingreso,&array[a+tamanioFila*(b+tamanioColumna*tam)])
 

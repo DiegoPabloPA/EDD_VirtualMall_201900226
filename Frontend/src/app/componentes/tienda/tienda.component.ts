@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TiendaService } from "../../servicios/tienda.service";
-import { Busqueda, EnvioCompra } from "../../modelos/busqueda";
+import { Busqueda, EnvioCompra,ComentarioTienda,SubComentarioTienda, ComentarioArticulo, SubComentarioArticulo } from "../../modelos/busqueda";
 import { FormControl } from '@angular/forms';
 import { flushMicrotasks } from '@angular/core/testing';
 
@@ -15,16 +15,127 @@ export class TiendaComponent implements OnInit {
    
   }
   textoarea=new FormControl('')
-
+  textoareacomentarioTienda=new FormControl('')
+  textoareacomentarioArticulo=new FormControl('')
+  textosubcomentarioTienda=new FormControl('')
+  textosubcomentarioArticulo=new FormControl('')
   pInputCant:string[]=[];
   informacion:String[];
   categorias:String[];
   informacion2:String[];
   inventarios:any;
   respuesta:any;
+  sub:number;
+  indicador1:number;
+  indicador2:number;
+  almacenarLLaves:string;
   Logo:String="Logo";
+  Com:String="Comentarios";
   mostrarMensaje=false
   mostrarMensajeError=false
+  escritura:string="";
+  codigo:string="";
+
+  ComentarioTienda(){
+    const coment:ComentarioTienda={
+      DPI:parseInt(localStorage.getItem('DPI')),
+      NombreSec:localStorage.getItem('Nombre'),
+      Categoria:localStorage.getItem('Categoria'),
+      Calificacion:parseInt(localStorage.getItem('calificacion')),
+      Nombre:localStorage.getItem('NombreUsuario'),
+      Comentario:this.textoareacomentarioTienda.value
+
+    }
+    this.tienda.postComentarioPrincipalTienda(coment).subscribe((res:any)=>{
+      this.textoareacomentarioTienda.setValue("")
+      window.location.reload()
+      },(err)=>{
+        
+      }
+      
+      )
+  }
+  ComentarioPrincipalArticulo(codigo:number){
+    const coment:ComentarioArticulo={
+      Codigo:codigo,
+      DPI:parseInt(localStorage.getItem('DPI')),
+      NombreSec:localStorage.getItem('Nombre'),
+      Categoria:localStorage.getItem('Categoria'),
+      Calificacion:parseInt(localStorage.getItem('calificacion')),
+      Nombre:localStorage.getItem('NombreUsuario'),
+      Comentario:this.textoareacomentarioArticulo.value
+
+    }
+    this.tienda.postComentarioPrincipalArticulo(coment).subscribe((res:any)=>{
+      this.textoareacomentarioArticulo.setValue("")
+      window.location.reload()
+      },(err)=>{
+        
+      }
+      
+      )
+  }
+
+
+
+  SubComentarioTienda(clav:number[]){
+    
+    const coment:SubComentarioTienda={
+      Clave:clav.join(';'),
+      DPI:parseInt(localStorage.getItem('DPI')),
+      NombreSec:localStorage.getItem('Nombre'),
+      Categoria:localStorage.getItem('Categoria'),
+      Calificacion:parseInt(localStorage.getItem('calificacion')),
+      Nombre:localStorage.getItem('NombreUsuario'),
+      Comentario:this.textosubcomentarioTienda.value
+
+    }
+    console.log(coment)
+    this.tienda.postSubComentario(coment).subscribe((res:any)=>{
+      this.textosubcomentarioTienda.setValue("")
+      window.location.reload()
+      },(err)=>{
+        
+      }
+      
+      )
+  }
+  SubComentarioArticulo(cod:number,clav:number[]){
+    
+    const coment:SubComentarioArticulo={
+      Codigo:cod,
+      Clave:clav.join(';'),
+      DPI:parseInt(localStorage.getItem('DPI')),
+      NombreSec:localStorage.getItem('Nombre'),
+      Categoria:localStorage.getItem('Categoria'),
+      Calificacion:parseInt(localStorage.getItem('calificacion')),
+      Nombre:localStorage.getItem('NombreUsuario'),
+      Comentario:this.textosubcomentarioArticulo.value
+
+    }
+    console.log(coment)
+    this.tienda.postSubComentarioArticulo(coment).subscribe((res:any)=>{
+      this.textosubcomentarioArticulo.setValue("")
+      window.location.reload()
+      },(err)=>{
+        
+      }
+      
+      )
+  }
+
+
+
+
+
+     botonAnidacion(m:string){
+       console.log(m)
+     }
+ 
+  
+
+
+  
 
 
 
@@ -33,15 +144,20 @@ export class TiendaComponent implements OnInit {
       Departamento:localStorage.getItem('Categoria'),
       Nombre:localStorage.getItem('Nombre'),
       Calificacion:parseInt(localStorage.getItem('calificacion'))
-
+      
 
     }
 
 
+    
+
+      
 
     this.tienda.postCargatiendas(bus).subscribe((res:any)=>{
       this.informacion=Object.keys(res)
       this.respuesta=res
+      console.log(this.respuesta)
+      
 
       },(err)=>{
         
@@ -54,6 +170,7 @@ export class TiendaComponent implements OnInit {
         this.informacion2=Object.keys(res)
         
         this.inventarios=res
+        console.log(res)
         this.AsignarInfo()
         },(err)=>{
           
@@ -61,11 +178,15 @@ export class TiendaComponent implements OnInit {
         
         )
 
+        
       
 
        
-    
+        
   }
+
+
+
   AsignarInfo(){
     this.inventarios.forEach(element => {
       this.pInputCant.push(element.Codigo)

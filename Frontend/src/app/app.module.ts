@@ -33,7 +33,8 @@ import { GestionusuariosComponent } from './componentes/gestionusuarios/gestionu
     RegistroComponent,
     SubidagrafoComponent,
     CargaUsuariosComponent,
-    GestionusuariosComponent
+    GestionusuariosComponent,
+  
   ],
   imports: [
     BrowserModule,

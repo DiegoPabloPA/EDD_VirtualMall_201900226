@@ -2,65 +2,196 @@ digraph G{
 node[shape=circle];
 edge[dir="both"];
 rankdir=LR
-Nodo0[label="A"];
-Nodo1[label="B"];
-Nodo2[label="C"];
-Nodo3[label="D"];
-Nodo4[label="E"];
-Nodo5[label="F"];
-Nodo6[label="G"];
-Nodo7[label="H"];
-Nodo8[label="I"];
-Nodo9[label="J"];
-Nodo10[label="K"];
-Nodo11[label="L"];
-Nodo12[label="M"];
-Nodo13[label="N"];
-Nodo14[label="P"];
-Nodo0->Nodo1[label="8"];
-Nodo0->Nodo4[label="4"];
-Nodo0->Nodo3[label="5"];
-Nodo1->Nodo2[label="3"];
-Nodo1->Nodo5[label="4"];
-Nodo1->Nodo4[label="12"];
-Nodo2->Nodo6[label="11"];
-Nodo2->Nodo5[label="9"];
-Nodo3->Nodo4[label="9"];
-Nodo3->Nodo7[label="6"];
-Nodo4->Nodo5[label="3"];
-Nodo4->Nodo9[label="5"];
-Nodo4->Nodo8[label="8"];
-Nodo5->Nodo6[label="1"];
-Nodo5->Nodo10[label="8"];
-Nodo6->Nodo11[label="7"];
-Nodo6->Nodo10[label="8"];
-Nodo7->Nodo8[label="2"];
-Nodo7->Nodo12[label="7"];
-Nodo8->Nodo9[label="10"];
-Nodo8->Nodo12[label="6"];
-Nodo9->Nodo10[label="6"];
-Nodo9->Nodo13[label="9"];
-Nodo10->Nodo11[label="5"];
-Nodo10->Nodo14[label="7"];
-Nodo11->Nodo14[label="6"];
-Nodo12->Nodo13[label="2"];
-Nodo13->Nodo14[label="12"];
+Nodo0[label="Mirage voyage"];
+Nodo1[label="Gauntlet"];
+Nodo2[label="Salvage"];
+Nodo3[label="Water treatment"];
+Nodo4[label="Repulsor"];
+Nodo5[label="Hydro dam"];
+Nodo6[label="Market"];
+Nodo7[label="Bunker"];
+Nodo8[label="Airbase"];
+Nodo9[label="Runoff"];
+Nodo10[label="The pit"];
+Nodo11[label="Containment"];
+Nodo12[label="The cage"];
+Nodo13[label="Labs"];
+Nodo14[label="Capacitor"];
+Nodo15[label="Swamps"];
+Nodo16[label="Broken relay"];
+Nodo17[label="Artillery"];
+Nodo18[label="Crash site"];
+Nodo19[label="Spotted lake"];
+Nodo20[label="The rig"];
+Nodo21[label="Eliseo"];
+Nodo22[label="Hidroponia"];
+Nodo23[label="Plaza de los bonsais"];
+Nodo24[label="Matriz solar"];
+Nodo25[label="Canon orbital"];
+Nodo26[label="Torres de cultivo"];
+Nodo27[label="Jardines"];
+Nodo28[label="Laboratorios Hammond"];
+Nodo29[label="Fincas"];
+Nodo30[label="Oasis"];
+Nodo31[label="Turbina"];
+Nodo32[label="Transportador"];
+Nodo33[label="Muelles"];
+Nodo34[label="Brecha"];
+Nodo35[label="Red electrica"];
+Nodo36[label="Almacen de energia"];
+Nodo37[label="Skyhook"];
+Nodo38[label="Drill site"];
+Nodo39[label="Lava fissure"];
+Nodo40[label="Mirage voyage2"];
+Nodo41[label="The train yard"];
+Nodo42[label="Fragment west"];
+Nodo43[label="Fragment east"];
+Nodo44[label="Survey camp"];
+Nodo45[label="Refinery"];
+Nodo46[label="The epicenter"];
+Nodo47[label="Overlook"];
+Nodo48[label="Thermal station"];
+Nodo49[label="Harvester"];
+Nodo50[label="The tree"];
+Nodo51[label="Sorting factory"];
+Nodo52[label="Lava city"];
+Nodo53[label="The dome"];
+Nodo54[label="The geyser"];
+Nodo55[label="Portal de Union"];
+Nodo0->Nodo1[label="10"];
+Nodo1->Nodo2[label="6"];
+Nodo1->Nodo8[label="5"];
+Nodo2->Nodo3[label="12"];
+Nodo2->Nodo6[label="8"];
+Nodo3->Nodo4[label="7"];
+Nodo3->Nodo6[label="3"];
+Nodo4->Nodo5[label="5"];
+Nodo4->Nodo6[label="15"];
+Nodo5->Nodo12[label="13"];
+Nodo5->Nodo13[label="7"];
+Nodo5->Nodo15[label="15"];
+Nodo6->Nodo7[label="10"];
+Nodo7->Nodo2[label="12"];
+Nodo7->Nodo8[label="20"];
+Nodo8->Nodo9[label="6"];
+Nodo8->Nodo10[label="12"];
+Nodo9->Nodo10[label="4"];
+Nodo9->Nodo19[label="15"];
+Nodo10->Nodo7[label="5"];
+Nodo10->Nodo19[label="7"];
+Nodo10->Nodo11[label="2"];
+Nodo11->Nodo7[label="16"];
+Nodo11->Nodo12[label="24"];
+Nodo11->Nodo17[label="15"];
+Nodo11->Nodo14[label="36"];
+Nodo12->Nodo13[label="5"];
+Nodo12->Nodo14[label="5"];
+Nodo13->Nodo15[label="2"];
+Nodo13->Nodo14[label="8"];
+Nodo14->Nodo20[label="18"];
+Nodo14->Nodo16[label="4"];
+Nodo15->Nodo20[label="5"];
+Nodo15->Nodo14[label="16"];
+Nodo16->Nodo17[label="7"];
+Nodo17->Nodo18[label="9"];
+Nodo18->Nodo19[label="8"];
+Nodo19->Nodo11[label="15"];
+Nodo20->Nodo16[label="6"];
+Nodo21->Nodo22[label="20"];
+Nodo21->Nodo29[label="15"];
+Nodo21->Nodo30[label="7"];
+Nodo22->Nodo23[label="8"];
+Nodo22->Nodo29[label="10"];
+Nodo22->Nodo24[label="50"];
+Nodo23->Nodo24[label="15"];
+Nodo24->Nodo28[label="12"];
+Nodo24->Nodo26[label="20"];
+Nodo24->Nodo25[label="7"];
+Nodo25->Nodo26[label="7"];
+Nodo26->Nodo27[label="15"];
+Nodo27->Nodo36[label="7"];
+Nodo27->Nodo34[label="14"];
+Nodo28->Nodo36[label="13"];
+Nodo28->Nodo29[label="14"];
+Nodo28->Nodo31[label="10"];
+Nodo29->Nodo30[label="6"];
+Nodo29->Nodo31[label="12"];
+Nodo30->Nodo32[label="8"];
+Nodo30->Nodo31[label="18"];
+Nodo31->Nodo35[label="7"];
+Nodo31->Nodo36[label="12"];
+Nodo31->Nodo33[label="20"];
+Nodo32->Nodo33[label="6"];
+Nodo33->Nodo35[label="9"];
+Nodo33->Nodo34[label="20"];
+Nodo34->Nodo36[label="12"];
+Nodo35->Nodo34[label="9"];
+Nodo36->Nodo35[label="13"];
+Nodo37->Nodo42[label="30"];
+Nodo37->Nodo38[label="10"];
+Nodo37->Nodo39[label="15"];
+Nodo37->Nodo44[label="12"];
+Nodo38->Nodo41[label="8"];
+Nodo38->Nodo39[label="5"];
+Nodo38->Nodo42[label="12"];
+Nodo39->Nodo41[label="15"];
+Nodo39->Nodo40[label="8"];
+Nodo40->Nodo48[label="14"];
+Nodo40->Nodo49[label="25"];
+Nodo41->Nodo49[label="7"];
+Nodo41->Nodo43[label="14"];
+Nodo42->Nodo43[label="5"];
+Nodo42->Nodo46[label="7"];
+Nodo42->Nodo44[label="15"];
+Nodo43->Nodo46[label="9"];
+Nodo43->Nodo47[label="16"];
+Nodo43->Nodo54[label="20"];
+Nodo44->Nodo46[label="8"];
+Nodo44->Nodo45[label="5"];
+Nodo45->Nodo47[label="15"];
+Nodo45->Nodo46[label="5"];
+Nodo46->Nodo47[label="12"];
+Nodo47->Nodo54[label="10"];
+Nodo48->Nodo49[label="8"];
+Nodo48->Nodo50[label="5"];
+Nodo49->Nodo51[label="6"];
+Nodo49->Nodo50[label="15"];
+Nodo50->Nodo51[label="10"];
+Nodo51->Nodo53[label="18"];
+Nodo51->Nodo52[label="8"];
+Nodo51->Nodo54[label="16"];
+Nodo52->Nodo54[label="5"];
+Nodo53->Nodo52[label="4"];
+Nodo54->Nodo49[label="30"];
+Nodo55->Nodo3[label="1"];
+Nodo55->Nodo23[label="1"];
+Nodo55->Nodo53[label="1"];
 n[shape=none label=<<table><tr>
 <td>Recorrido</td>
 </tr>
 <tr>
 <td>
-A B C 
+Transportador Muelles Red electrica Almacen de energia 
 </td>
 </tr>
 <tr>
 <td>
-C B F G L P 
+Almacen de energia Laboratorios Hammond Matriz solar Plaza de los bonsais Portal de Union Water treatment Market 
 </td>
 </tr>
 <tr>
 <td>
-P N  
+Market Bunker 
+</td>
+</tr>
+<tr>
+<td>
+Bunker Market Water treatment Portal de Union The dome Lava city Sorting factory Harvester Thermal station Mirage voyage2 
+</td>
+</tr>
+<tr>
+<td>
+Mirage voyage2 Thermal station Harvester Sorting factory Lava city The dome Portal de Union Plaza de los bonsais Hidroponia Fincas Oasis Transportador  
 </td>
 </tr>
 </table>>];
